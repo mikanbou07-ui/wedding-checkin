@@ -165,114 +165,20 @@
       font-size: 14px;
       min-height: 18px;
     }
-/* ▼ 新デザイン用スタイル ▼ */
-
-.title {
-  font-family: "Great Vibes", "Brush Script MT", cursive;
-  font-size: 40px;
-  color: #c9a14a;
-  margin-bottom: 8px;
-  text-align: center;
-}
-
-.subtitle {
-  font-size: 16px;
-  color: #b08b3c;
-  margin-bottom: 32px;
-  text-align: center;
-}
-
-.button-row {
-  display: flex;
-  gap: 24px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 32px;
-}
-
-.role-button {
-  width: 150px;
-  height: 220px;
-  border-radius: 24px;
-  border: 2px solid #d4b15a;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-}
-
-.role-button.groom {
-  background: linear-gradient(180deg, #1f3558 0%, #16243f 100%);
-  color: #ffffff;
-}
-
-.role-button.bride {
-  background: linear-gradient(180deg, #f3b6c9 0%, #e58fae 100%);
-  color: #ffffff;
-}
-
-.role-button .line1 {
-  font-family: "Great Vibes", "Brush Script MT", cursive;
-  font-size: 32px;
-  margin-bottom: 8px;
-}
-
-.role-button .line2 {
-  font-size: 14px;
-  letter-spacing: 0.05em;
-  opacity: 0.9;
-}
-
-.role-button:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.18);
-  opacity: 0.96;
-}
-
-.admin-button {
-  padding: 8px 16px;
-  border-radius: 999px;
-  border: 1px solid #c9a14a;
-  background: #4b4b4b;
-  color: #f7f2e8;
-  font-size: 12px;
-  cursor: pointer;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
-}
-
-.admin-button:hover {
-  background: #3a3a3a;
-}
-
-    
   </style>
 </head>
 <body>
 
-  <!-- ▼ スタート画面（新デザイン） ▼ -->
+  <!-- スタート画面 -->
   <div id="screen-start" class="screen active">
-    <div class="title">Wedding Reception</div>
-    <div class="subtitle">Please select GROOM or BRIDE</div>
-
-    <div class="button-row">
-      <button class="role-button groom" id="btn-groom">
-        <div class="line1">Groom</div>
-        <div class="line2">– Naoki -</div>
-      </button>
-
-      <button class="role-button bride" id="btn-bride">
-        <div class="line1">Bride</div>
-        <div class="line2">– Mika -</div>
-      </button>
+    <h1>結婚式受付</h1>
+    <h2>新郎・新婦を選んでください</h2>
+    <div class="row">
+      <button id="btn-groom">新郎側</button>
+      <button id="btn-bride">新婦側</button>
     </div>
-
-    <button class="admin-button admin-link" id="btn-admin-open">Admin</button>
+    <button class="admin-link small" id="btn-admin-open">管理者</button>
   </div>
-
 
   <!-- 名前選択画面 -->
   <div id="screen-select" class="screen">
@@ -286,21 +192,10 @@
 
   <!-- メッセージ表示画面 -->
   <div id="screen-message" class="screen">
-  <h1 id="message-title">メッセージ</h1>
-  <img id="message-photo" class="message-photo" src="" alt="写真" />
-  <div id="message-text" class="message-text"></div>
-
-  <!-- カウントダウン表示 -->
-  <div id="countdown" style="font-size:20px; margin-top:20px; color:#555;">
-    20秒後にHOMEへ戻ります
+    <h1 id="message-title">メッセージ</h1>
+    <img id="message-photo" class="message-photo" src="" alt="写真" />
+    <div id="message-text" class="message-text"></div>
   </div>
-
-  <!-- 戻るボタン -->
-  <button id="btn-message-back" class="secondary" style="margin-top:20px;">
-    HOMEに戻る
-  </button>
-</div>
-
 
   <!-- 管理者画面 -->
   <div id="screen-admin" class="screen">
@@ -311,7 +206,7 @@
       <button class="small" data-filter="bride">新婦側のみ</button>
     </div>
     <div class="admin-table" id="admin-table"></div>
-    <button class="secondary" id="btn-admin-back">HOMEに戻る</button>
+    <button class="secondary" id="btn-admin-back">スタート画面に戻る</button>
   </div>
 
   <!-- 管理者パスコードモーダル -->
@@ -425,22 +320,6 @@
       showScreen("screen-start");
     });
 
-   document.getElementById("btn-groom").addEventListener("click", () => {
-     showScreen("screen-select");
-     // 新郎側フィルタ処理など既存ロジックに接続
-   });
-
-   document.getElementById("btn-bride").addEventListener("click", () => {
-     showScreen("screen-select");
-     // 新婦側フィルタ処理など既存ロジックに接続
-   });
-
-   document.getElementById("btn-admin").addEventListener("click", () => {
-     document.getElementById("modal-admin").classList.add("active");
-   });
-
-
-
     // 名前一覧表示
     function renderGuestList() {
       const title = currentSide === "groom" ? "新郎側のゲストを選んでください" : "新婦側のゲストを選んでください";
@@ -478,47 +357,29 @@
         });
     }
 
-// 決定ボタン → メッセージ画面へ
-document.getElementById("btn-select-confirm").addEventListener("click", () => {
-  if (!selectedGuestId) {
-    alert("名前を選択してください。");
-    return;
-  }
-  const guest = guests.find(g => g.id === selectedGuestId);
-  if (!guest) return;
+    // 決定ボタン
+    document.getElementById("btn-select-confirm").addEventListener("click", () => {
+      if (!selectedGuestId) {
+        alert("名前を選択してください。");
+        return;
+      }
+      const guest = guests.find(g => g.id === selectedGuestId);
+      if (!guest) return;
 
-  setChecked(guest.id, true);
+      setChecked(guest.id, true);
 
-  document.getElementById("message-title").textContent = guest.name + " さんへのメッセージ";
-  document.getElementById("message-photo").src = guest.photo;
-  document.getElementById("message-text").textContent = guest.message;
+      document.getElementById("message-title").textContent = guest.name + " さんへのメッセージ";
+      document.getElementById("message-photo").src = guest.photo;
+      document.getElementById("message-text").textContent = guest.message;
 
-  showScreen("screen-message");
+      showScreen("screen-message");
 
-  // カウントダウン処理
-  let remaining = 20;
-  const countdownEl = document.getElementById("countdown");
-  countdownEl.textContent = `${remaining}秒後にHOMEへ戻ります`;
-
-  if (timerId) clearInterval(timerId);
-  timerId = setInterval(() => {
-    remaining--;
-    countdownEl.textContent = `${remaining}秒後にHOMEへ戻ります`;
-
-    if (remaining <= 0) {
-      clearInterval(timerId);
-      selectedGuestId = null;
-      showScreen("screen-start");
-    }
-  }, 1000);
-});
-
-// 戻るボタン
-document.getElementById("btn-message-back").addEventListener("click", () => {
-  if (timerId) clearInterval(timerId);
-  selectedGuestId = null;
-  showScreen("screen-start");
-});
+      if (timerId) clearTimeout(timerId);
+      timerId = setTimeout(() => {
+        selectedGuestId = null;
+        showScreen("screen-start");
+      }, 20000); // 20秒
+    });
 
     // 管理者モーダル
     const modalAdmin = document.getElementById("modal-admin");
@@ -596,26 +457,10 @@ document.getElementById("btn-message-back").addEventListener("click", () => {
     document.getElementById("btn-admin-back").addEventListener("click", () => {
       showScreen("screen-start");
     });
-    // 管理者パスコード OK ボタン
-   document.getElementById("btn-admin-pass-ok").addEventListener("click", () => {
-     const pass = document.getElementById("admin-pass-input").value;
-
-     if (pass === "1206") {
-       document.getElementById("modal-admin").classList.remove("active");
-       showScreen("screen-admin");
-     } else {
-       document.getElementById("admin-pass-error").textContent = "パスコードが違います";
-     }
-   });
-
-   // 管理者パスコード キャンセル
-   document.getElementById("btn-admin-pass-cancel").addEventListener("click", () => {
-     document.getElementById("modal-admin").classList.remove("active");
-   });
-
 
     // 初期化
     loadChecked();
   </script>
 </body>
 </html>
+
