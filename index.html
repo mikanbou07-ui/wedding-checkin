@@ -105,4 +105,324 @@
       margin-bottom: 6px;
     }
 
-    .role-card .line
+    .role-card .line2 {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    /* ------------------------------------
+       Admin ボタン
+    ------------------------------------ */
+    .admin-button {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid #c9a14a;
+      background: #4b4b4b;
+      color: #f7f2e8;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.18);
+    }
+
+    /* ------------------------------------
+       ゲスト選択画面
+    ------------------------------------ */
+    .guest-list {
+      max-height: 60vh;
+      overflow-y: auto;
+      width: 100%;
+      max-width: 600px;
+      border: 1px solid #e5d4d4;
+      border-radius: 12px;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .guest-item {
+      padding: 10px 12px;
+      margin: 6px 0;
+      border-radius: 12px;
+      border: 1px solid #f3d1d1;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .guest-item.selected {
+      background: #ffe6ef;
+      border-color: #f7a8c4;
+    }
+
+    /* ------------------------------------
+       メッセージ画面
+    ------------------------------------ */
+    .message-photo {
+      max-width: 90vw;
+      max-height: 50vh;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+
+    /* ------------------------------------
+       管理者画面（ゴールド系）
+    ------------------------------------ */
+    #screen-admin {
+      background: rgba(255, 245, 248, 0.85);
+      border-radius: 16px;
+      padding-top: 40px;
+    }
+
+    #screen-admin h1 {
+      font-family: "Great Vibes", "Brush Script MT", cursive;
+      font-size: 48px;
+      font-weight: bold;
+      color: #c9a14a;
+      margin-bottom: 20px;
+    }
+
+    #screen-admin .row button {
+      background: #f3e3c2;
+      color: #5a4a1f;
+      border: 1px solid #d4b15a;
+      border-radius: 999px;
+      padding: 8px 16px;
+      margin: 4px;
+      cursor: pointer;
+    }
+
+    #screen-admin .row button:hover {
+      background: #e8d7a8;
+    }
+
+    .admin-table {
+      max-width: 800px;
+      width: 100%;
+      max-height: 60vh;
+      overflow-y: auto;
+      border: 1px solid #e5d4d4;
+      border-radius: 12px;
+      background: #fff;
+      padding: 10px;
+    }
+
+    .admin-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 6px;
+      border-bottom: 1px solid #f0e0e0;
+    }
+
+    /* ------------------------------------
+       管理者モーダル
+    ------------------------------------ */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      max-width: 300px;
+      width: 90%;
+      text-align: center;
+      border: 2px solid #d4b15a;
+    }
+
+    .modal-content h2 {
+      font-family: "Great Vibes", "Brush Script MT", cursive;
+      font-size: 32px;
+      color: #c9a14a;
+      margin-bottom: 10px;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 12px;
+      border: 1px solid #e5d4d4;
+      margin-bottom: 16px;
+    }
+
+    .error {
+      color: #c00;
+      font-size: 14px;
+      min-height: 18px;
+    }
+
+    button {
+      background: #f7a8c4;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 6px;
+    }
+
+    button.secondary {
+      background: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="overlay"></div>
+
+  <!-- ▼ トップ画面 -->
+  <div id="screen-start" class="screen active">
+    <div class="title">Wedding Reception</div>
+    <div class="subtitle">Please select GROOM or BRIDE</div>
+
+    <div class="button-row">
+      <div class="role-card groom" id="btn-groom">
+        <div class="line1">Groom</div>
+        <div class="line2">– Naoki</div>
+      </div>
+
+      <div class="role-card bride" id="btn-bride">
+        <div class="line1">Bride</div>
+        <div class="line2">– Mika</div>
+      </div>
+    </div>
+
+    <button class="admin-button" id="btn-admin-open">Admin</button>
+  </div>
+
+  <!-- ▼ ゲスト選択画面 -->
+  <div id="screen-select" class="screen">
+    <h1>ゲスト選択</h1>
+    <div class="guest-list" id="guest-list"></div>
+    <button id="btn-select-back">戻る</button>
+  </div>
+
+  <!-- ▼ メッセージ画面 -->
+  <div id="screen-message" class="screen">
+    <img id="message-photo" class="message-photo" />
+    <div id="message-text" class="message-text"></div>
+    <button id="btn-message-back">戻る</button>
+  </div>
+
+  <!-- ▼ 管理者画面 -->
+  <div id="screen-admin" class="screen">
+    <h1>管理者画面</h1>
+    <div class="row">
+      <button data-filter="all">全員</button>
+      <button data-filter="groom">新郎側のみ</button>
+      <button data-filter="bride">新婦側のみ</button>
+    </div>
+    <div class="admin-table" id="admin-table"></div>
+    <button class="secondary" id="btn-admin-back">HOMEに戻る</button>
+  </div>
+
+  <!-- ▼ 管理者パスコードモーダル -->
+  <div id="modal-admin" class="modal">
+    <div class="modal-content">
+      <h2>Admin</h2>
+      <input type="password" id="admin-pass-input" maxlength="4" placeholder="4桁の数字" />
+      <div id="admin-pass-error" class="error"></div>
+      <button id="btn-admin-pass-ok">OK</button>
+      <button class="secondary" id="btn-admin-pass-cancel">キャンセル</button>
+    </div>
+  </div>
+
+  <script>
+    /* 画面切り替え */
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    /* 管理者モーダル */
+    const ADMIN_PASS = "1206";
+    const modalAdmin = document.getElementById("modal-admin");
+    const adminPassInput = document.getElementById("admin-pass-input");
+    const adminPassError = document.getElementById("admin-pass-error");
+
+    document.getElementById("btn-admin-open").addEventListener("click", () => {
+      adminPassInput.value = "";
+      adminPassError.textContent = "";
+      modalAdmin.classList.add("active");
+      adminPassInput.focus();
+    });
+
+    document.getElementById("btn-admin-pass-cancel").addEventListener("click", () => {
+      modalAdmin.classList.remove("active");
+    });
+
+    document.getElementById("btn-admin-pass-ok").addEventListener("click", () => {
+      const val = adminPassInput.value.trim();
+      if (val === ADMIN_PASS) {
+        modalAdmin.classList.remove("active");
+        renderAdminTable("all");
+        showScreen("screen-admin");
+      } else {
+        adminPassError.textContent = "パスコードが違います。";
+      }
+    });
+
+    /* 管理者画面 */
+    function renderAdminTable(filter) {
+      const table = document.getElementById("admin-table");
+      table.innerHTML = "";
+
+      guests
+        .filter(g => filter === "all" ? true : g.side === filter)
+        .forEach(g => {
+          const row = document.createElement("div");
+          row.className = "admin-row";
+
+          const sideSpan = document.createElement("span");
+          sideSpan.textContent = g.side === "groom" ? "新郎" : "新婦";
+
+          const nameSpan = document.createElement("span");
+          nameSpan.textContent = g.name;
+
+          const statusSpan = document.createElement("span");
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = isChecked(g.id);
+          checkbox.addEventListener("change", () => {
+            setChecked(g.id, checkbox.checked);
+          });
+
+          statusSpan.appendChild(checkbox);
+
+          row.appendChild(sideSpan);
+          row.appendChild(nameSpan);
+          row.appendChild(statusSpan);
+
+          table.appendChild(row);
+        });
+    }
+
+    document.querySelectorAll("#screen-admin .row button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const filter = btn.getAttribute("data-filter");
+        renderAdminTable(filter);
+      });
+    });
+
+    document.getElementById("btn-admin-back").addEventListener("click", () => {
+      showScreen("screen-start");
+    });
+  </script>
+
+</body>
+</html>
