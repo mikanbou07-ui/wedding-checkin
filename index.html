@@ -191,11 +191,22 @@
   </div>
 
   <!-- メッセージ表示画面 -->
-  <div id="screen-message" class="screen">
-    <h1 id="message-title">メッセージ</h1>
-    <img id="message-photo" class="message-photo" src="" alt="写真" />
-    <div id="message-text" class="message-text"></div>
+<div id="screen-message" class="screen">
+  <h1 id="message-title">メッセージ</h1>
+  <img id="message-photo" class="message-photo" src="" alt="写真" />
+  <div id="message-text" class="message-text"></div>
+
+  <!-- 追加：カウントダウン表示 -->
+  <div id="countdown" style="font-size:20px; margin-top:20px; color:#555;">
+    20秒後にスタート画面へ戻ります
   </div>
+
+  <!-- 追加：戻るボタン -->
+  <button id="btn-message-back" class="secondary" style="margin-top:20px;">
+    スタート画面に戻る
+  </button>
+</div>
+
 
   <!-- 管理者画面 -->
   <div id="screen-admin" class="screen">
@@ -357,29 +368,48 @@
         });
     }
 
-    // 決定ボタン
-    document.getElementById("btn-select-confirm").addEventListener("click", () => {
-      if (!selectedGuestId) {
-        alert("名前を選択してください。");
-        return;
-      }
-      const guest = guests.find(g => g.id === selectedGuestId);
-      if (!guest) return;
+// 決定ボタン → メッセージ画面へ
+document.getElementById("btn-select-confirm").addEventListener("click", () => {
+  if (!selectedGuestId) {
+    alert("名前を選択してください。");
+    return;
+  }
+  const guest = guests.find(g => g.id === selectedGuestId);
+  if (!guest) return;
 
-      setChecked(guest.id, true);
+  setChecked(guest.id, true);
 
-      document.getElementById("message-title").textContent = guest.name + " さんへのメッセージ";
-      document.getElementById("message-photo").src = guest.photo;
-      document.getElementById("message-text").textContent = guest.message;
+  document.getElementById("message-title").textContent = guest.name + " さんへのメッセージ";
+  document.getElementById("message-photo").src = guest.photo;
+  document.getElementById("message-text").textContent = guest.message;
 
-      showScreen("screen-message");
+  showScreen("screen-message");
 
-      if (timerId) clearTimeout(timerId);
-      timerId = setTimeout(() => {
-        selectedGuestId = null;
-        showScreen("screen-start");
-      }, 20000); // 20秒
-    });
+  // カウントダウン処理
+  let remaining = 20;
+  const countdownEl = document.getElementById("countdown");
+  countdownEl.textContent = `${remaining}秒後にスタート画面へ戻ります`;
+
+  if (timerId) clearInterval(timerId);
+  timerId = setInterval(() => {
+    remaining--;
+    countdownEl.textContent = `${remaining}秒後にスタート画面へ戻ります`;
+
+    if (remaining <= 0) {
+      clearInterval(timerId);
+      selectedGuestId = null;
+      showScreen("screen-start");
+    }
+  }, 1000);
+});
+
+// 戻るボタン
+document.getElementById("btn-message-back").addEventListener("click", () => {
+  if (timerId) clearInterval(timerId);
+  selectedGuestId = null;
+  showScreen("screen-start");
+});
+
 
     // 管理者モーダル
     const modalAdmin = document.getElementById("modal-admin");
