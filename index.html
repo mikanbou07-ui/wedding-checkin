@@ -132,6 +132,7 @@
       padding-bottom: 20px;
     }
 
+    /* Wedding Reception */
     #screen-start h1 {
       font-family: "Great Vibes", cursive;
       font-size: clamp(100px, 13vw, 150px);
@@ -147,7 +148,7 @@
       display: none;
     }
 
-    /* 「受付はこちら」 */
+    /* 受付はこちら */
     .reception-guide {
       font-size: 24px;
       font-weight: 500;
@@ -156,35 +157,28 @@
       margin-bottom: 48px;
     }
 
-    /* Groom / Bride のセット */
+    /* Groom / Bride */
     #screen-start .row {
       gap: 45px;
       width: 100%;
       justify-content: center;
-      align-items: flex-start;
-    }
-
-    .side-choice {
-      display: flex;
-      flex-direction: column;
       align-items: center;
     }
 
-    #btn-groom,
-    #btn-bride {
+    /* =================================
+       Groom / Bride ボタン
+    ================================= */
+
+    .side-button {
       width: 380px;
       height: 300px;
 
       margin: 0;
 
-      font-family: "Great Vibes", cursive;
-      font-size: 64px;
-      font-weight: 400;
-      letter-spacing: 0.02em;
-
       border-radius: 28px;
 
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
 
@@ -196,7 +190,7 @@
     }
 
     /* Groom */
-    #btn-groom {
+    .groom-button {
       background: #3F4A59;
       border: 1px solid #3F4A59;
 
@@ -205,7 +199,7 @@
         inset 0 1px 0 rgba(255,255,255,0.2);
     }
 
-    #btn-groom:hover {
+    .groom-button:hover {
       transform: translateY(-4px);
 
       box-shadow:
@@ -214,7 +208,7 @@
     }
 
     /* Bride */
-    #btn-bride {
+    .bride-button {
       background: #A67189;
       border: 1px solid #A67189;
 
@@ -223,7 +217,7 @@
         inset 0 1px 0 rgba(255,255,255,0.25);
     }
 
-    #btn-bride:hover {
+    .bride-button:hover {
       transform: translateY(-4px);
 
       box-shadow:
@@ -231,14 +225,24 @@
         inset 0 1px 0 rgba(255,255,255,0.3);
     }
 
+    /* Groom / Bride */
+    .side-title {
+      font-family: "Great Vibes", cursive;
+      font-size: 64px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
     /* Naoki / Mika */
-    .person-name {
+    .side-button .person-name {
       font-family: "Great Vibes", cursive;
       font-size: 42px;
       font-weight: 400;
-      color: var(--gold);
+      color: #ffffff;
       letter-spacing: 0.02em;
-      margin-top: 16px;
+
+      margin-top: 22px;
       line-height: 1;
     }
 
@@ -679,14 +683,16 @@
         gap: 25px;
       }
 
-      #btn-groom,
-      #btn-bride {
+      .side-button {
         width: 300px;
         height: 240px;
+      }
+
+      .side-title {
         font-size: 54px;
       }
 
-      .person-name {
+      .side-button .person-name {
         font-size: 36px;
       }
     }
@@ -718,14 +724,16 @@
         align-items: center;
       }
 
-      #btn-groom,
-      #btn-bride {
+      .side-button {
         width: min(380px, 88vw);
         height: 170px;
+      }
+
+      .side-title {
         font-size: 56px;
       }
 
-      .person-name {
+      .side-button .person-name {
         font-size: 34px;
         margin-top: 12px;
       }
@@ -766,7 +774,6 @@
 
     <h1>Wedding Reception</h1>
 
-    <!-- 追加：受付はこちら -->
     <div class="reception-guide">
       受付はこちら
     </div>
@@ -774,30 +781,22 @@
     <div class="row">
 
       <!-- Groom -->
-      <div class="side-choice">
-
-        <button id="btn-groom">
-          Groom
-        </button>
-
-        <div class="person-name">
-          -Naoki-
-        </div>
-
-      </div>
+      <button
+        id="btn-groom"
+        class="side-button groom-button"
+      >
+        <span class="side-title">Groom</span>
+        <span class="person-name">-Naoki-</span>
+      </button>
 
       <!-- Bride -->
-      <div class="side-choice">
-
-        <button id="btn-bride">
-          Bride
-        </button>
-
-        <div class="person-name">
-          -Mika-
-        </div>
-
-      </div>
+      <button
+        id="btn-bride"
+        class="side-button bride-button"
+      >
+        <span class="side-title">Bride</span>
+        <span class="person-name">-Mika-</span>
+      </button>
 
     </div>
 
@@ -1139,7 +1138,6 @@
             document.createElement("span");
 
           if (isChecked(g.id)) {
-
             statusSpan.className = "checked";
             statusSpan.textContent = "受付済み";
           }
