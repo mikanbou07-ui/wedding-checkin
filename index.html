@@ -4,20 +4,16 @@
   <meta charset="UTF-8" />
   <title>結婚式受付システム</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Noto+Serif+JP:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Noto+Serif+JP:wght@400;500;600;700&display=swap');
 
     :root {
-      --pink: #d99aa8;
+      --pink: #A67189;
       --pink-light: #f9e9ed;
-      --pink-pale: #fff7f8;
-
-      --blue: #a9c8d8;
-      --blue-light: #e9f3f7;
-
+      --blue: #3F4A59;
       --gold: #c7a46a;
       --gold-light: #e7d2a7;
-
       --ivory: #fffdf9;
       --text: #5b4a4d;
       --text-light: #8b777b;
@@ -57,7 +53,7 @@
       content: "✦";
       position: fixed;
       color: rgba(199,164,106,0.22);
-      font-family: "Cormorant Garamond", serif;
+      font-family: "Noto Serif JP", serif;
       font-size: 80px;
       pointer-events: none;
       z-index: 0;
@@ -89,10 +85,6 @@
       align-items: center;
       justify-content: center;
     }
-
-    /* =================================
-       共通タイトル
-    ================================= */
 
     h1,
     h2 {
@@ -130,13 +122,6 @@
       letter-spacing: 0.08em;
     }
 
-    .script {
-      font-family: "Great Vibes", cursive;
-      font-weight: 400;
-      color: var(--gold);
-      letter-spacing: 0.02em;
-    }
-
     /* =================================
        スタート画面
     ================================= */
@@ -147,11 +132,6 @@
       padding-bottom: 20px;
     }
 
-    /*
-      Wedding Reception
-      元の約3倍サイズ
-      太字
-    */
     #screen-start h1 {
       font-family: "Great Vibes", cursive;
       font-size: clamp(100px, 13vw, 150px);
@@ -159,27 +139,34 @@
       color: var(--gold);
       letter-spacing: 0;
       line-height: 1;
-      margin: 0 0 55px;
+      margin: 0 0 12px;
       white-space: nowrap;
     }
 
-    /*
-      h1の下線はWedding Receptionでは不要なので削除
-    */
     #screen-start h1::after {
       display: none;
     }
 
-    /*
-      Groom / Bride ボタン
-      横：約2倍
-      縦：約5倍
-      文字：約2倍
-    */
+    /* 「受付はこちら」 */
+    .reception-guide {
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: 0.12em;
+      margin-bottom: 48px;
+    }
+
+    /* Groom / Bride のセット */
     #screen-start .row {
-      gap: 35px;
+      gap: 45px;
       width: 100%;
       justify-content: center;
+      align-items: flex-start;
+    }
+
+    .side-choice {
+      display: flex;
+      flex-direction: column;
       align-items: center;
     }
 
@@ -208,56 +195,51 @@
         box-shadow 0.2s ease;
     }
 
-    /*
-      Groom
-      上品な薄いブルー
-    */
+    /* Groom */
     #btn-groom {
-      background: linear-gradient(
-        145deg,
-        #bdd8e3,
-        #9fc3d3
-      );
-
-      border: 1px solid #a7c9d6;
+      background: #3F4A59;
+      border: 1px solid #3F4A59;
 
       box-shadow:
-        0 10px 25px rgba(125, 170, 190, 0.25),
-        inset 0 1px 0 rgba(255,255,255,0.45);
+        0 10px 25px rgba(63, 74, 89, 0.28),
+        inset 0 1px 0 rgba(255,255,255,0.2);
     }
 
     #btn-groom:hover {
       transform: translateY(-4px);
 
       box-shadow:
-        0 15px 32px rgba(125, 170, 190, 0.32),
-        inset 0 1px 0 rgba(255,255,255,0.5);
+        0 15px 32px rgba(63, 74, 89, 0.35),
+        inset 0 1px 0 rgba(255,255,255,0.25);
     }
 
-    /*
-      Bride
-      上品なピンク
-    */
+    /* Bride */
     #btn-bride {
-      background: linear-gradient(
-        145deg,
-        #dca4b0,
-        #c98696
-      );
-
-      border: 1px solid var(--gold);
+      background: #A67189;
+      border: 1px solid #A67189;
 
       box-shadow:
-        0 10px 25px rgba(185, 125, 140, 0.22),
-        inset 0 1px 0 rgba(255,255,255,0.4);
+        0 10px 25px rgba(166, 113, 137, 0.25),
+        inset 0 1px 0 rgba(255,255,255,0.25);
     }
 
     #btn-bride:hover {
       transform: translateY(-4px);
 
       box-shadow:
-        0 15px 32px rgba(185, 125, 140, 0.30),
-        inset 0 1px 0 rgba(255,255,255,0.5);
+        0 15px 32px rgba(166, 113, 137, 0.32),
+        inset 0 1px 0 rgba(255,255,255,0.3);
+    }
+
+    /* Naoki / Mika */
+    .person-name {
+      font-family: "Great Vibes", cursive;
+      font-size: 42px;
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+      margin-top: 16px;
+      line-height: 1;
     }
 
     /* =================================
@@ -547,7 +529,7 @@
     }
 
     .admin-row span.side {
-      width: 60px;
+      width: 80px;
 
       color: var(--gold);
 
@@ -684,7 +666,7 @@
     }
 
     /* =================================
-       スマートフォン・タブレット対応
+       タブレット
     ================================= */
 
     @media (max-width: 850px) {
@@ -694,7 +676,7 @@
       }
 
       #screen-start .row {
-        gap: 20px;
+        gap: 25px;
       }
 
       #btn-groom,
@@ -703,7 +685,15 @@
         height: 240px;
         font-size: 54px;
       }
+
+      .person-name {
+        font-size: 36px;
+      }
     }
+
+    /* =================================
+       スマートフォン
+    ================================= */
 
     @media (max-width: 600px) {
 
@@ -712,25 +702,32 @@
         min-height: 100vh;
       }
 
-      /*
-        スマホでもスタート画面の
-        大きさをできるだけ維持
-      */
       #screen-start h1 {
         font-size: 82px;
-        margin-bottom: 40px;
+        margin-bottom: 8px;
+      }
+
+      .reception-guide {
+        font-size: 19px;
+        margin-bottom: 30px;
       }
 
       #screen-start .row {
         flex-direction: column;
-        gap: 18px;
+        gap: 20px;
+        align-items: center;
       }
 
       #btn-groom,
       #btn-bride {
         width: min(380px, 88vw);
-        height: 190px;
-        font-size: 58px;
+        height: 170px;
+        font-size: 56px;
+      }
+
+      .person-name {
+        font-size: 34px;
+        margin-top: 12px;
       }
 
       .guest-list {
@@ -758,185 +755,231 @@
 
   </style>
 </head>
+
 <body>
+
   <!-- =================================
        スタート画面
   ================================== -->
+
   <div id="screen-start" class="screen active">
-<!-- Wedding Reception -->
-<h1>Wedding Reception</h1>
 
-<!-- 「新郎・新婦を選んでください」は削除 -->
+    <h1>Wedding Reception</h1>
 
-<div class="row">
+    <!-- 追加：受付はこちら -->
+    <div class="reception-guide">
+      受付はこちら
+    </div>
 
-  <!-- Groom -->
-  <button id="btn-groom">
-    Groom
-  </button>
+    <div class="row">
 
-  <!-- Bride -->
-  <button id="btn-bride">
-    Bride
-  </button>
+      <!-- Groom -->
+      <div class="side-choice">
 
-</div>
+        <button id="btn-groom">
+          Groom
+        </button>
 
-<button
-  class="admin-link small"
-  id="btn-admin-open"
->
-  管理者
-</button>
+        <div class="person-name">
+          -Naoki-
+        </div>
+
+      </div>
+
+      <!-- Bride -->
+      <div class="side-choice">
+
+        <button id="btn-bride">
+          Bride
+        </button>
+
+        <div class="person-name">
+          -Mika-
+        </div>
+
+      </div>
+
+    </div>
+
+    <button
+      class="admin-link small"
+      id="btn-admin-open"
+    >
+      管理者
+    </button>
+
   </div>
+
+
   <!-- =================================
        ゲスト選択画面
   ================================== -->
+
   <div id="screen-select" class="screen">
-<h1 id="select-title">
-  Groom's Guests
-</h1>
 
-<div
-  class="guest-list"
-  id="guest-list"
-></div>
+    <h1 id="select-title">
+      Groom's Guests
+    </h1>
 
-<div class="row">
+    <div
+      class="guest-list"
+      id="guest-list"
+    ></div>
 
-  <button
-    class="secondary"
-    id="btn-select-back"
-  >
-    戻る
-  </button>
+    <div class="row">
 
-  <button id="btn-select-confirm">
-    決定
-  </button>
+      <button
+        class="secondary"
+        id="btn-select-back"
+      >
+        戻る
+      </button>
 
-</div>
+      <button id="btn-select-confirm">
+        決定
+      </button>
+
+    </div>
+
   </div>
+
+
   <!-- =================================
        メッセージ表示画面
   ================================== -->
+
   <div id="screen-message" class="screen">
-<h1 id="message-title">
-  メッセージ
-</h1>
 
-<img
-  id="message-photo"
-  class="message-photo"
-  src=""
-  alt="写真"
-/>
+    <h1 id="message-title">
+      メッセージ
+    </h1>
 
-<div
-  id="message-text"
-  class="message-text"
-></div>
+    <img
+      id="message-photo"
+      class="message-photo"
+      src=""
+      alt="写真"
+    />
 
-<div
-  id="countdown"
-  style="font-size:20px; margin-top:20px;"
->
-  20秒後にスタート画面へ戻ります
-</div>
+    <div
+      id="message-text"
+      class="message-text"
+    ></div>
 
-<button
-  id="btn-message-back"
-  class="secondary"
-  style="margin-top:20px;"
->
-  スタート画面に戻る
-</button>
+    <div
+      id="countdown"
+      style="font-size:20px; margin-top:20px;"
+    >
+      20秒後にスタート画面へ戻ります
+    </div>
+
+    <button
+      id="btn-message-back"
+      class="secondary"
+      style="margin-top:20px;"
+    >
+      スタート画面に戻る
+    </button>
+
   </div>
+
+
   <!-- =================================
        管理者画面
   ================================== -->
+
   <div id="screen-admin" class="screen">
-<h1>管理者画面</h1>
 
-<div class="row">
+    <h1>管理者画面</h1>
 
-  <button
-    class="small"
-    data-filter="all"
-  >
-    全員
-  </button>
+    <div class="row">
 
-  <button
-    class="small"
-    data-filter="groom"
-  >
-    Groom
-  </button>
+      <button
+        class="small"
+        data-filter="all"
+      >
+        全員
+      </button>
 
-  <button
-    class="small"
-    data-filter="bride"
-  >
-    Bride
-  </button>
+      <button
+        class="small"
+        data-filter="groom"
+      >
+        Groom
+      </button>
 
-</div>
+      <button
+        class="small"
+        data-filter="bride"
+      >
+        Bride
+      </button>
 
-<div
-  class="admin-table"
-  id="admin-table"
-></div>
+    </div>
 
-<button
-  class="secondary"
-  id="btn-admin-back"
->
-  スタート画面に戻る
-</button>
+    <div
+      class="admin-table"
+      id="admin-table"
+    ></div>
+
+    <button
+      class="secondary"
+      id="btn-admin-back"
+    >
+      スタート画面に戻る
+    </button>
+
   </div>
+
+
   <!-- =================================
        管理者パスコードモーダル
   ================================== -->
+
   <div
     id="modal-admin"
     class="modal"
   >
-<div class="modal-content">
 
-  <h2>
-    管理者パスコード
-  </h2>
+    <div class="modal-content">
 
-  <input
-    type="password"
-    id="admin-pass-input"
-    maxlength="4"
-    placeholder="4桁の数字"
-  />
+      <h2>
+        管理者パスコード
+      </h2>
 
-  <div
-    id="admin-pass-error"
-    class="error"
-  ></div>
+      <input
+        type="password"
+        id="admin-pass-input"
+        maxlength="4"
+        placeholder="4桁の数字"
+      />
 
-  <button id="btn-admin-pass-ok">
-    OK
-  </button>
+      <div
+        id="admin-pass-error"
+        class="error"
+      ></div>
 
-  <button
-    class="secondary small"
-    id="btn-admin-pass-cancel"
-  >
-    キャンセル
-  </button>
+      <button id="btn-admin-pass-ok">
+        OK
+      </button>
 
-</div>
+      <button
+        class="secondary small"
+        id="btn-admin-pass-cancel"
+      >
+        キャンセル
+      </button>
+
+    </div>
+
   </div>
+
+
   <!-- =================================
        JavaScript
        ※画面遷移・処理は変更なし
   ================================== -->
+
   <script>
 
     // ゲストデータ
@@ -993,38 +1036,24 @@
     let timerId = null;
     let checkedMap = {};
 
-    // =================================
     // 画面切り替え
-    // =================================
-
     function showScreen(id) {
-
       document
         .querySelectorAll(".screen")
-        .forEach(s =>
-          s.classList.remove("active")
-        );
+        .forEach(s => s.classList.remove("active"));
 
       document
         .getElementById(id)
         .classList.add("active");
     }
 
-    // =================================
     // localStorage読み込み
-    // =================================
-
     function loadChecked() {
-
-      const raw =
-        localStorage.getItem(CHECK_KEY);
-
-      checkedMap =
-        raw ? JSON.parse(raw) : {};
+      const raw = localStorage.getItem(CHECK_KEY);
+      checkedMap = raw ? JSON.parse(raw) : {};
     }
 
     function saveChecked() {
-
       localStorage.setItem(
         CHECK_KEY,
         JSON.stringify(checkedMap)
@@ -1032,31 +1061,23 @@
     }
 
     function isChecked(id) {
-
       return !!checkedMap[id];
     }
 
     function setChecked(id, value) {
-
       checkedMap[id] = !!value;
-
       saveChecked();
     }
 
-    // =================================
     // スタート画面イベント
-    // =================================
-
     document
       .getElementById("btn-groom")
       .addEventListener("click", () => {
 
         currentSide = "groom";
-
         selectedGuestId = null;
 
         renderGuestList();
-
         showScreen("screen-select");
       });
 
@@ -1065,11 +1086,9 @@
       .addEventListener("click", () => {
 
         currentSide = "bride";
-
         selectedGuestId = null;
 
         renderGuestList();
-
         showScreen("screen-select");
       });
 
@@ -1078,14 +1097,10 @@
       .addEventListener("click", () => {
 
         selectedGuestId = null;
-
         showScreen("screen-start");
       });
 
-    // =================================
     // 名前一覧表示
-    // =================================
-
     function renderGuestList() {
 
       const title =
@@ -1103,9 +1118,7 @@
       listEl.innerHTML = "";
 
       guests
-        .filter(g =>
-          g.side === currentSide
-        )
+        .filter(g => g.side === currentSide)
         .forEach(g => {
 
           const item =
@@ -1128,33 +1141,24 @@
           if (isChecked(g.id)) {
 
             statusSpan.className = "checked";
-
-            statusSpan.textContent =
-              "受付済み";
+            statusSpan.textContent = "受付済み";
           }
 
           item.appendChild(nameSpan);
-
           item.appendChild(statusSpan);
 
-          item.addEventListener(
-            "click",
-            () => {
+          item.addEventListener("click", () => {
 
-              selectedGuestId = g.id;
+            selectedGuestId = g.id;
+            renderGuestList();
 
-              renderGuestList();
-            }
-          );
+          });
 
           listEl.appendChild(item);
         });
     }
 
-    // =================================
-    // 決定ボタン → メッセージ画面
-    // =================================
-
+    // 決定ボタン → メッセージ画面へ
     document
       .getElementById("btn-select-confirm")
       .addEventListener("click", () => {
@@ -1162,27 +1166,20 @@
         if (!selectedGuestId) {
 
           alert("名前を選択してください。");
-
           return;
         }
 
         const guest =
-          guests.find(
-            g => g.id === selectedGuestId
-          );
+          guests.find(g => g.id === selectedGuestId);
 
         if (!guest) return;
 
-        setChecked(
-          guest.id,
-          true
-        );
+        setChecked(guest.id, true);
 
         document
           .getElementById("message-title")
           .textContent =
-          guest.name +
-          " さんへのメッセージ";
+          guest.name + " さんへのメッセージ";
 
         document
           .getElementById("message-photo")
@@ -1190,13 +1187,11 @@
 
         document
           .getElementById("message-text")
-          .textContent =
-          guest.message;
+          .textContent = guest.message;
 
         showScreen("screen-message");
 
         // カウントダウン処理
-
         let remaining = 20;
 
         const countdownEl =
@@ -1209,30 +1204,26 @@
           clearInterval(timerId);
         }
 
-        timerId =
-          setInterval(() => {
+        timerId = setInterval(() => {
 
-            remaining--;
+          remaining--;
 
-            countdownEl.textContent =
-              `${remaining}秒後にスタート画面へ戻ります`;
+          countdownEl.textContent =
+            `${remaining}秒後にスタート画面へ戻ります`;
 
-            if (remaining <= 0) {
+          if (remaining <= 0) {
 
-              clearInterval(timerId);
+            clearInterval(timerId);
 
-              selectedGuestId = null;
+            selectedGuestId = null;
 
-              showScreen("screen-start");
-            }
+            showScreen("screen-start");
+          }
 
-          }, 1000);
+        }, 1000);
       });
 
-    // =================================
-    // メッセージ画面から戻る
-    // =================================
-
+    // 戻るボタン
     document
       .getElementById("btn-message-back")
       .addEventListener("click", () => {
@@ -1246,29 +1237,21 @@
         showScreen("screen-start");
       });
 
-    // =================================
     // 管理者モーダル
-    // =================================
-
     const modalAdmin =
       document.getElementById("modal-admin");
 
     const adminPassInput =
-      document.getElementById(
-        "admin-pass-input"
-      );
+      document.getElementById("admin-pass-input");
 
     const adminPassError =
-      document.getElementById(
-        "admin-pass-error"
-      );
+      document.getElementById("admin-pass-error");
 
     document
       .getElementById("btn-admin-open")
       .addEventListener("click", () => {
 
         adminPassInput.value = "";
-
         adminPassError.textContent = "";
 
         modalAdmin.classList.add("active");
@@ -1280,9 +1263,7 @@
       .getElementById("btn-admin-pass-cancel")
       .addEventListener("click", () => {
 
-        modalAdmin.classList.remove(
-          "active"
-        );
+        modalAdmin.classList.remove("active");
       });
 
     document
@@ -1294,9 +1275,7 @@
 
         if (val === ADMIN_PASS) {
 
-          modalAdmin.classList.remove(
-            "active"
-          );
+          modalAdmin.classList.remove("active");
 
           renderAdminTable("all");
 
@@ -1309,16 +1288,11 @@
         }
       });
 
-    // =================================
     // 管理者画面
-    // =================================
-
     function renderAdminTable(filter) {
 
       const table =
-        document.getElementById(
-          "admin-table"
-        );
+        document.getElementById("admin-table");
 
       table.innerHTML = "";
 
@@ -1333,14 +1307,12 @@
           const row =
             document.createElement("div");
 
-          row.className =
-            "admin-row";
+          row.className = "admin-row";
 
           const sideSpan =
             document.createElement("span");
 
-          sideSpan.className =
-            "side";
+          sideSpan.className = "side";
 
           sideSpan.textContent =
             g.side === "groom"
@@ -1350,60 +1322,37 @@
           const nameSpan =
             document.createElement("span");
 
-          nameSpan.className =
-            "name";
-
-          nameSpan.textContent =
-            g.name;
+          nameSpan.className = "name";
+          nameSpan.textContent = g.name;
 
           const statusSpan =
             document.createElement("span");
 
-          statusSpan.className =
-            "status";
+          statusSpan.className = "status";
 
           const checkbox =
-            document.createElement(
-              "input"
-            );
+            document.createElement("input");
 
-          checkbox.type =
-            "checkbox";
-
-          checkbox.checked =
-            isChecked(g.id);
+          checkbox.type = "checkbox";
+          checkbox.checked = isChecked(g.id);
 
           checkbox.addEventListener(
             "change",
             () => {
-
               setChecked(
                 g.id,
                 checkbox.checked
               );
-
             }
           );
 
-          statusSpan.appendChild(
-            checkbox
-          );
+          statusSpan.appendChild(checkbox);
 
-          row.appendChild(
-            sideSpan
-          );
+          row.appendChild(sideSpan);
+          row.appendChild(nameSpan);
+          row.appendChild(statusSpan);
 
-          row.appendChild(
-            nameSpan
-          );
-
-          row.appendChild(
-            statusSpan
-          );
-
-          table.appendChild(
-            row
-          );
+          table.appendChild(row);
         });
     }
 
@@ -1413,40 +1362,26 @@
       )
       .forEach(btn => {
 
-        btn.addEventListener(
-          "click",
-          () => {
+        btn.addEventListener("click", () => {
 
-            const filter =
-              btn.getAttribute(
-                "data-filter"
-              );
+          const filter =
+            btn.getAttribute("data-filter");
 
-            renderAdminTable(
-              filter
-            );
-          }
-        );
+          renderAdminTable(filter);
+        });
       });
 
     document
       .getElementById("btn-admin-back")
-      .addEventListener(
-        "click",
-        () => {
+      .addEventListener("click", () => {
 
-          showScreen(
-            "screen-start"
-          );
-        }
-      );
+        showScreen("screen-start");
+      });
 
-    // =================================
     // 初期化
-    // =================================
-
     loadChecked();
 
   </script>
+
 </body>
 </html>
