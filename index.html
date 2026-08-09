@@ -4,168 +4,532 @@
   <meta charset="UTF-8" />
   <title>結婚式受付システム</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-      background: #f7f7f7;
-      color: #333;
-    }
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Noto+Serif+JP:wght@400;500;600;700&display=swap');
+
+  :root {
+    --pink: #d99aa8;
+    --pink-light: #f9e9ed;
+    --pink-pale: #fff7f8;
+    --gold: #c7a46a;
+    --gold-light: #e7d2a7;
+    --ivory: #fffdf9;
+    --text: #5b4a4d;
+    --text-light: #8b777b;
+    --white: #ffffff;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Noto Serif JP", serif;
+    background:
+      radial-gradient(circle at 15% 15%, rgba(231,210,167,0.16) 0, transparent 28%),
+      radial-gradient(circle at 85% 85%, rgba(217,154,168,0.12) 0, transparent 30%),
+      linear-gradient(135deg, #fffdf9 0%, #fff7f8 50%, #fffdf9 100%);
+    color: var(--text);
+    letter-spacing: 0.04em;
+  }
+
+  body::before,
+  body::after {
+    content: "✦";
+    position: fixed;
+    color: rgba(199,164,106,0.22);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 80px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::before {
+    top: 25px;
+    left: 30px;
+  }
+
+  body::after {
+    right: 30px;
+    bottom: 25px;
+  }
+
+  .screen {
+    display: none;
+    height: 100vh;
+    min-height: 600px;
+    padding: 35px 24px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+  }
+
+  .screen.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* --------------------------------
+     タイトル
+  -------------------------------- */
+
+  h1,
+  h2 {
+    margin: 10px 0 20px;
+    text-align: center;
+    font-family: "Noto Serif JP", serif;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  h1 {
+    font-size: clamp(34px, 6vw, 54px);
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+  }
+
+  h1::after {
+    content: "";
+    display: block;
+    width: 70px;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--gold),
+      transparent
+    );
+    margin: 18px auto 0;
+  }
+
+  h2 {
+    font-size: clamp(17px, 3vw, 23px);
+    font-weight: 500;
+    color: var(--text-light);
+    letter-spacing: 0.08em;
+  }
+
+  /* 英字を筆記体にしたいタイトル用 */
+  .script {
+    font-family: "Great Vibes", cursive;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+  }
+
+  /* --------------------------------
+     ボタン
+  -------------------------------- */
+
+  button {
+    padding: 14px 34px;
+    margin: 8px;
+    min-width: 150px;
+    font-family: "Noto Serif JP", serif;
+    font-size: 17px;
+    letter-spacing: 0.08em;
+    border-radius: 999px;
+    border: 1px solid var(--gold);
+    cursor: pointer;
+    background: linear-gradient(
+      135deg,
+      #dca4b0,
+      #c98696
+    );
+    color: white;
+    box-shadow:
+      0 5px 14px rgba(185, 125, 140, 0.18),
+      inset 0 1px 0 rgba(255,255,255,0.35);
+    transition: all 0.2s ease;
+  }
+
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 18px rgba(185, 125, 140, 0.25),
+      inset 0 1px 0 rgba(255,255,255,0.4);
+  }
+
+  button:active {
+    transform: translateY(0);
+  }
+
+  button.secondary {
+    background: rgba(255,255,255,0.8);
+    color: var(--text-light);
+    border-color: #d8c5b0;
+    box-shadow: 0 4px 10px rgba(100,80,80,0.08);
+  }
+
+  button.small {
+    min-width: auto;
+    font-size: 13px;
+    padding: 9px 18px;
+  }
+
+  .row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* --------------------------------
+     スタート画面
+  -------------------------------- */
+
+  #screen-start h1 {
+    font-size: clamp(42px, 8vw, 64px);
+    font-weight: 700;
+    color: #634e52;
+  }
+
+  #screen-start h1::before {
+    content: "Wedding Reception";
+    display: block;
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(38px, 7vw, 62px);
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 0;
+    margin-bottom: -3px;
+  }
+
+  #screen-start h2 {
+    margin-bottom: 30px;
+  }
+
+  #btn-groom,
+  #btn-bride {
+    min-width: 180px;
+    font-size: 18px;
+  }
+
+  /* --------------------------------
+     管理者ボタン
+  -------------------------------- */
+
+  .admin-link {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    font-size: 11px;
+    min-width: auto;
+    padding: 8px 15px !important;
+    background: rgba(255,255,255,0.7) !important;
+    color: #9b878b !important;
+    border: 1px solid #dbc8ae !important;
+    box-shadow: none !important;
+  }
+
+  /* --------------------------------
+     ゲスト選択
+  -------------------------------- */
+
+  #screen-select {
+    justify-content: center;
+  }
+
+  #select-title {
+    max-width: 800px;
+    margin-bottom: 25px;
+  }
+
+  .guest-list {
+    max-height: 58vh;
+    overflow-y: auto;
+    width: 100%;
+    max-width: 620px;
+    border: 1px solid var(--gold-light);
+    border-radius: 16px;
+    padding: 14px;
+    box-sizing: border-box;
+    background: rgba(255,255,255,0.82);
+    box-shadow:
+      0 10px 30px rgba(120,90,90,0.08),
+      inset 0 0 0 4px rgba(231,210,167,0.12);
+  }
+
+  .guest-list::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .guest-list::-webkit-scrollbar-thumb {
+    background: #dec4c9;
+    border-radius: 10px;
+  }
+
+  .guest-item {
+    padding: 14px 17px;
+    margin: 6px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #eee1e2;
+    background: rgba(255,255,255,0.75);
+    color: var(--text);
+    transition: all 0.18s ease;
+  }
+
+  .guest-item:hover {
+    border-color: var(--gold-light);
+    background: #fff8f9;
+  }
+
+  .guest-item.selected {
+    background: linear-gradient(
+      90deg,
+      #f9e7eb,
+      #fffaf8
+    );
+    border-color: var(--gold);
+    box-shadow:
+      0 3px 10px rgba(199,164,106,0.12);
+  }
+
+  .guest-item span.checked {
+    font-size: 11px;
+    color: #a68b58;
+    border: 1px solid #dcc898;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #fffaf0;
+  }
+
+  /* --------------------------------
+     メッセージ画面
+  -------------------------------- */
+
+  #message-title {
+    margin-bottom: 22px;
+  }
+
+  .message-photo {
+    max-width: 88vw;
+    max-height: 48vh;
+    object-fit: contain;
+    border-radius: 14px;
+    border: 5px solid white;
+    outline: 1px solid var(--gold-light);
+    box-shadow:
+      0 10px 30px rgba(100,80,80,0.18);
+    margin-bottom: 22px;
+    background: #faf7f5;
+  }
+
+  .message-text {
+    font-size: 22px;
+    line-height: 1.9;
+    text-align: center;
+    padding: 0 20px;
+    color: var(--text);
+  }
+
+  #countdown {
+    font-size: 14px !important;
+    margin-top: 18px !important;
+    color: var(--text-light) !important;
+    letter-spacing: 0.05em;
+  }
+
+  #btn-message-back {
+    margin-top: 12px !important;
+  }
+
+  /* --------------------------------
+     管理者画面
+  -------------------------------- */
+
+  #screen-admin h1 {
+    margin-bottom: 15px;
+  }
+
+  .admin-table {
+    max-width: 800px;
+    width: 100%;
+    max-height: 58vh;
+    overflow-y: auto;
+    border: 1px solid var(--gold-light);
+    border-radius: 14px;
+    background: rgba(255,255,255,0.88);
+    padding: 10px 14px;
+    box-sizing: border-box;
+    box-shadow: 0 8px 25px rgba(100,80,80,0.08);
+  }
+
+  .admin-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5px;
+    border-bottom: 1px solid #f0e4e3;
+    font-size: 14px;
+  }
+
+  .admin-row:last-child {
+    border-bottom: none;
+  }
+
+  .admin-row span.side {
+    width: 60px;
+    color: var(--gold);
+    font-size: 12px;
+  }
+
+  .admin-row span.name {
+    flex: 1;
+    color: var(--text);
+  }
+
+  .admin-row span.status {
+    width: 80px;
+    text-align: center;
+  }
+
+  .admin-row input[type="checkbox"] {
+    transform: scale(1.3);
+    accent-color: var(--pink);
+  }
+
+  /* 管理者フィルターボタン */
+  #screen-admin .row {
+    margin-bottom: 15px;
+  }
+
+  #screen-admin .row button {
+    background: #fffaf8;
+    color: var(--text-light);
+    border-color: #d8c3a4;
+    box-shadow: none;
+  }
+
+  #screen-admin .row button:hover {
+    background: var(--pink-light);
+  }
+
+  /* --------------------------------
+     モーダル
+  -------------------------------- */
+
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(80,60,60,0.38);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+
+  .modal.active {
+    display: flex;
+  }
+
+  .modal-content {
+    background:
+      linear-gradient(
+        145deg,
+        rgba(255,255,255,0.98),
+        rgba(255,247,248,0.98)
+      );
+    padding: 30px 25px;
+    border-radius: 18px;
+    border: 1px solid var(--gold-light);
+    max-width: 340px;
+    width: 88%;
+    text-align: center;
+    box-shadow:
+      0 20px 50px rgba(80,60,60,0.2);
+  }
+
+  .modal-content h2 {
+    font-size: 20px;
+    margin-bottom: 22px;
+  }
+
+  .modal-content input {
+    width: 100%;
+    padding: 12px;
+    font-family: "Noto Serif JP", serif;
+    font-size: 18px;
+    margin: 10px 0 20px;
+    box-sizing: border-box;
+    border: 1px solid #ddc7ca;
+    border-radius: 8px;
+    background: #fffdfc;
+    color: var(--text);
+    text-align: center;
+    letter-spacing: 0.2em;
+    outline: none;
+  }
+
+  .modal-content input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(199,164,106,0.12);
+  }
+
+  .error {
+    color: #b56d78;
+    font-size: 13px;
+    min-height: 18px;
+    margin-bottom: 5px;
+  }
+
+  /* --------------------------------
+     スマートフォン・タブレット対応
+  -------------------------------- */
+
+  @media (max-width: 600px) {
+
     .screen {
-      display: none;
-      height: 100vh;
-      padding: 20px;
-      box-sizing: border-box;
+      padding: 25px 15px;
+      min-height: 100vh;
     }
-    .screen.active {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+
+    h1 {
+      font-size: 34px;
     }
-    h1, h2 {
-      margin: 10px 0 20px;
-      text-align: center;
+
+    h2 {
+      font-size: 17px;
     }
+
     button {
-      padding: 12px 20px;
-      margin: 8px;
-      font-size: 18px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      background: #ff7f7f;
-      color: white;
+      min-width: 135px;
+      padding: 13px 22px;
+      font-size: 16px;
     }
-    button.secondary {
-      background: #888;
+
+    #btn-groom,
+    #btn-bride {
+      min-width: 145px;
     }
-    button.small {
-      font-size: 14px;
-      padding: 8px 12px;
-    }
-    .row {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+
     .guest-list {
-      max-height: 60vh;
-      overflow-y: auto;
-      width: 100%;
-      max-width: 600px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
+      max-height: 55vh;
       padding: 10px;
-      box-sizing: border-box;
-      background: white;
     }
+
     .guest-item {
-      padding: 8px 10px;
-      margin: 4px 0;
-      border-radius: 6px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border: 1px solid #eee;
+      padding: 13px 12px;
+      font-size: 15px;
     }
-    .guest-item.selected {
-      background: #ffe0e0;
-      border-color: #ff7f7f;
-    }
-    .guest-item span.checked {
-      font-size: 12px;
-      color: #2b8a3e;
-    }
+
     .message-photo {
-      max-width: 90vw;
-      max-height: 50vh;
-      object-fit: contain;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      margin-bottom: 20px;
-      background: #000;
+      max-height: 42vh;
     }
+
     .message-text {
-      font-size: 22px;
-      text-align: center;
-      padding: 0 20px;
+      font-size: 19px;
     }
-    .admin-link {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      font-size: 12px;
-      background: #444;
-    }
-    .admin-table {
-      max-width: 800px;
-      width: 100%;
-      max-height: 60vh;
-      overflow-y: auto;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background: white;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-    .admin-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 4px;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
-    }
-    .admin-row:last-child {
-      border-bottom: none;
-    }
-    .admin-row span.side {
-      width: 60px;
-    }
-    .admin-row span.name {
-      flex: 1;
-    }
-    .admin-row span.status {
-      width: 80px;
-      text-align: center;
-    }
-    .admin-row input[type="checkbox"] {
-      transform: scale(1.2);
-    }
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-    .modal.active {
-      display: flex;
-    }
-    .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 300px;
-      width: 90%;
-      text-align: center;
-    }
-    .modal-content input {
-      width: 100%;
-      padding: 10px;
-      font-size: 18px;
-      margin: 10px 0 20px;
-      box-sizing: border-box;
-    }
-    .error {
-      color: #c00;
-      font-size: 14px;
-      min-height: 18px;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
