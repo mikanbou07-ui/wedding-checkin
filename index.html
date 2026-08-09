@@ -132,7 +132,6 @@
       padding-bottom: 20px;
     }
 
-    /* Wedding Reception */
     #screen-start h1 {
       font-family: "Great Vibes", cursive;
       font-size: clamp(100px, 13vw, 150px);
@@ -148,7 +147,6 @@
       display: none;
     }
 
-    /* Groom / Bride */
     #screen-start .row {
       gap: 45px;
       width: 100%;
@@ -180,7 +178,6 @@
         box-shadow 0.2s ease;
     }
 
-    /* Groom */
     .groom-button {
       background: #3F4A59;
       border: 1px solid #3F4A59;
@@ -198,7 +195,6 @@
         inset 0 1px 0 rgba(255,255,255,0.25);
     }
 
-    /* Bride */
     .bride-button {
       background: #A67189;
       border: 1px solid #A67189;
@@ -216,9 +212,6 @@
         inset 0 1px 0 rgba(255,255,255,0.3);
     }
 
-    /* Groom / Bride
-       64px → 128px（2倍）
-    */
     .side-title {
       font-family: "Great Vibes", cursive;
       font-size: 128px;
@@ -227,7 +220,6 @@
       letter-spacing: 0.02em;
     }
 
-    /* Naoki / Mika */
     .side-button .person-name {
       font-family: "Great Vibes", cursive;
       font-size: 42px;
@@ -336,6 +328,9 @@
       justify-content: center;
     }
 
+    /*
+      Groom's Guests / Bride's Guests
+    */
     #select-title {
       max-width: 800px;
       margin-bottom: 25px;
@@ -348,6 +343,9 @@
       letter-spacing: 0.02em;
     }
 
+    /*
+      ゲスト一覧
+    */
     .guest-list {
       max-height: 58vh;
       overflow-y: auto;
@@ -376,8 +374,17 @@
       border-radius: 10px;
     }
 
+    /*
+      ゲスト項目
+
+      名前を項目の中央に配置
+    */
     .guest-item {
-      padding: 14px 17px;
+      position: relative;
+
+      min-height: 80px;
+
+      padding: 14px 80px 14px 80px;
       margin: 6px 0;
 
       border-radius: 10px;
@@ -385,8 +392,10 @@
       cursor: pointer;
 
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
+
+      text-align: center;
 
       border: 1px solid #eee1e2;
 
@@ -415,7 +424,44 @@
         0 3px 10px rgba(199,164,106,0.12);
     }
 
+    /*
+      ゲスト名
+
+      これまでの約2倍
+    */
+    .guest-item > span:first-child {
+      display: block;
+
+      width: 100%;
+
+      font-family: "Noto Serif JP", serif;
+
+      font-size: 30px;
+
+      font-weight: 600;
+
+      line-height: 1.5;
+
+      letter-spacing: 0.08em;
+
+      text-align: center;
+
+      color: var(--text);
+    }
+
+    /*
+      受付済み表示
+
+      名前中央を維持したまま右端に配置
+    */
     .guest-item span.checked {
+      position: absolute;
+
+      right: 18px;
+      top: 50%;
+
+      transform: translateY(-50%);
+
       font-size: 11px;
 
       color: #a68b58;
@@ -427,6 +473,8 @@
       border-radius: 999px;
 
       background: #fffaf0;
+
+      white-space: nowrap;
     }
 
     /* =================================
@@ -688,6 +736,10 @@
       .side-button .person-name {
         font-size: 36px;
       }
+
+      .guest-item > span:first-child {
+        font-size: 28px;
+      }
     }
 
     /* =================================
@@ -726,14 +778,28 @@
         margin-top: 12px;
       }
 
+      /*
+        スマートフォンでも名前を大きく表示
+        名前は中央固定
+      */
       .guest-list {
         max-height: 55vh;
         padding: 10px;
       }
 
       .guest-item {
-        padding: 13px 12px;
-        font-size: 15px;
+        min-height: 76px;
+        padding: 12px 70px;
+      }
+
+      .guest-item > span:first-child {
+        font-size: 26px;
+      }
+
+      .guest-item span.checked {
+        right: 12px;
+        font-size: 10px;
+        padding: 3px 6px;
       }
 
       #select-title {
