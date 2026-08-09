@@ -4,598 +4,690 @@
   <meta charset="UTF-8" />
   <title>結婚式受付システム</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Noto+Serif+JP:wght@400;500;600;700&display=swap');
-
-  :root {
-    --pink: #d99aa8;
-    --pink-light: #f9e9ed;
-    --pink-pale: #fff7f8;
-    --gold: #c7a46a;
-    --gold-light: #e7d2a7;
-    --ivory: #fffdf9;
-    --text: #5b4a4d;
-    --text-light: #8b777b;
-    --white: #ffffff;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    font-family: "Noto Serif JP", serif;
-    background:
-      radial-gradient(circle at 15% 15%, rgba(231,210,167,0.16) 0, transparent 28%),
-      radial-gradient(circle at 85% 85%, rgba(217,154,168,0.12) 0, transparent 30%),
-      linear-gradient(135deg, #fffdf9 0%, #fff7f8 50%, #fffdf9 100%);
-    color: var(--text);
-    letter-spacing: 0.04em;
-  }
-
-  body::before,
-  body::after {
-    content: "✦";
-    position: fixed;
-    color: rgba(199,164,106,0.22);
-    font-family: "Cormorant Garamond", serif;
-    font-size: 80px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  body::before {
-    top: 25px;
-    left: 30px;
-  }
-
-  body::after {
-    right: 30px;
-    bottom: 25px;
-  }
-
-  .screen {
-    display: none;
-    height: 100vh;
-    min-height: 600px;
-    padding: 35px 24px;
-    box-sizing: border-box;
-    position: relative;
-    z-index: 1;
-  }
-
-  .screen.active {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* --------------------------------
-     タイトル
-  -------------------------------- */
-
-  h1,
-  h2 {
-    margin: 10px 0 20px;
-    text-align: center;
-    font-family: "Noto Serif JP", serif;
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  h1 {
-    font-size: clamp(34px, 6vw, 54px);
-    letter-spacing: 0.12em;
-    margin-bottom: 12px;
-  }
-
-  h1::after {
-    content: "";
-    display: block;
-    width: 70px;
-    height: 1px;
-    background: linear-gradient(
-      to right,
-      transparent,
-      var(--gold),
-      transparent
-    );
-    margin: 18px auto 0;
-  }
-
-  h2 {
-    font-size: clamp(17px, 3vw, 23px);
-    font-weight: 500;
-    color: var(--text-light);
-    letter-spacing: 0.08em;
-  }
-
-  /* 英字を筆記体にしたいタイトル用 */
-  .script {
-    font-family: "Great Vibes", cursive;
-    font-weight: 400;
-    color: var(--gold);
-    letter-spacing: 0.02em;
-  }
-
-  /* --------------------------------
-     ボタン
-  -------------------------------- */
-
-  button {
-    padding: 14px 34px;
-    margin: 8px;
-    min-width: 150px;
-    font-family: "Noto Serif JP", serif;
-    font-size: 17px;
-    letter-spacing: 0.08em;
-    border-radius: 999px;
-    border: 1px solid var(--gold);
-    cursor: pointer;
-    background: linear-gradient(
-      135deg,
-      #dca4b0,
-      #c98696
-    );
-    color: white;
-    box-shadow:
-      0 5px 14px rgba(185, 125, 140, 0.18),
-      inset 0 1px 0 rgba(255,255,255,0.35);
-    transition: all 0.2s ease;
-  }
-
-  button:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      0 8px 18px rgba(185, 125, 140, 0.25),
-      inset 0 1px 0 rgba(255,255,255,0.4);
-  }
-
-  button:active {
-    transform: translateY(0);
-  }
-
-  button.secondary {
-    background: rgba(255,255,255,0.8);
-    color: var(--text-light);
-    border-color: #d8c5b0;
-    box-shadow: 0 4px 10px rgba(100,80,80,0.08);
-  }
-
-  button.small {
-    min-width: auto;
-    font-size: 13px;
-    padding: 9px 18px;
-  }
-
-  .row {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  /* --------------------------------
-     スタート画面
-  -------------------------------- */
-
-  #screen-start h1 {
-    font-size: clamp(42px, 8vw, 64px);
-    font-weight: 700;
-    color: #634e52;
-  }
-
-  #screen-start h1::before {
-    content: "Wedding Reception";
-    display: block;
-    font-family: "Great Vibes", cursive;
-    font-size: clamp(38px, 7vw, 62px);
-    font-weight: 400;
-    color: var(--gold);
-    letter-spacing: 0;
-    margin-bottom: -3px;
-  }
-
-  #screen-start h2 {
-    margin-bottom: 30px;
-  }
-
-  #btn-groom,
-  #btn-bride {
-    min-width: 180px;
-    font-size: 18px;
-  }
-
-  /* --------------------------------
-     管理者ボタン
-  -------------------------------- */
-
-  .admin-link {
-    position: fixed;
-    right: 18px;
-    bottom: 18px;
-    font-size: 11px;
-    min-width: auto;
-    padding: 8px 15px !important;
-    background: rgba(255,255,255,0.7) !important;
-    color: #9b878b !important;
-    border: 1px solid #dbc8ae !important;
-    box-shadow: none !important;
-  }
-
-  /* --------------------------------
-     ゲスト選択
-  -------------------------------- */
-
-  #screen-select {
-    justify-content: center;
-  }
-
-  #select-title {
-    max-width: 800px;
-    margin-bottom: 25px;
-  }
-
-  .guest-list {
-    max-height: 58vh;
-    overflow-y: auto;
-    width: 100%;
-    max-width: 620px;
-    border: 1px solid var(--gold-light);
-    border-radius: 16px;
-    padding: 14px;
-    box-sizing: border-box;
-    background: rgba(255,255,255,0.82);
-    box-shadow:
-      0 10px 30px rgba(120,90,90,0.08),
-      inset 0 0 0 4px rgba(231,210,167,0.12);
-  }
-
-  .guest-list::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .guest-list::-webkit-scrollbar-thumb {
-    background: #dec4c9;
-    border-radius: 10px;
-  }
-
-  .guest-item {
-    padding: 14px 17px;
-    margin: 6px 0;
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #eee1e2;
-    background: rgba(255,255,255,0.75);
-    color: var(--text);
-    transition: all 0.18s ease;
-  }
-
-  .guest-item:hover {
-    border-color: var(--gold-light);
-    background: #fff8f9;
-  }
-
-  .guest-item.selected {
-    background: linear-gradient(
-      90deg,
-      #f9e7eb,
-      #fffaf8
-    );
-    border-color: var(--gold);
-    box-shadow:
-      0 3px 10px rgba(199,164,106,0.12);
-  }
-
-  .guest-item span.checked {
-    font-size: 11px;
-    color: #a68b58;
-    border: 1px solid #dcc898;
-    padding: 3px 8px;
-    border-radius: 999px;
-    background: #fffaf0;
-  }
-
-  /* --------------------------------
-     メッセージ画面
-  -------------------------------- */
-
-  #message-title {
-    margin-bottom: 22px;
-  }
-
-  .message-photo {
-    max-width: 88vw;
-    max-height: 48vh;
-    object-fit: contain;
-    border-radius: 14px;
-    border: 5px solid white;
-    outline: 1px solid var(--gold-light);
-    box-shadow:
-      0 10px 30px rgba(100,80,80,0.18);
-    margin-bottom: 22px;
-    background: #faf7f5;
-  }
-
-  .message-text {
-    font-size: 22px;
-    line-height: 1.9;
-    text-align: center;
-    padding: 0 20px;
-    color: var(--text);
-  }
-
-  #countdown {
-    font-size: 14px !important;
-    margin-top: 18px !important;
-    color: var(--text-light) !important;
-    letter-spacing: 0.05em;
-  }
-
-  #btn-message-back {
-    margin-top: 12px !important;
-  }
-
-  /* --------------------------------
-     管理者画面
-  -------------------------------- */
-
-  #screen-admin h1 {
-    margin-bottom: 15px;
-  }
-
-  .admin-table {
-    max-width: 800px;
-    width: 100%;
-    max-height: 58vh;
-    overflow-y: auto;
-    border: 1px solid var(--gold-light);
-    border-radius: 14px;
-    background: rgba(255,255,255,0.88);
-    padding: 10px 14px;
-    box-sizing: border-box;
-    box-shadow: 0 8px 25px rgba(100,80,80,0.08);
-  }
-
-  .admin-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 5px;
-    border-bottom: 1px solid #f0e4e3;
-    font-size: 14px;
-  }
-
-  .admin-row:last-child {
-    border-bottom: none;
-  }
-
-  .admin-row span.side {
-    width: 60px;
-    color: var(--gold);
-    font-size: 12px;
-  }
-
-  .admin-row span.name {
-    flex: 1;
-    color: var(--text);
-  }
-
-  .admin-row span.status {
-    width: 80px;
-    text-align: center;
-  }
-
-  .admin-row input[type="checkbox"] {
-    transform: scale(1.3);
-    accent-color: var(--pink);
-  }
-
-  /* 管理者フィルターボタン */
-  #screen-admin .row {
-    margin-bottom: 15px;
-  }
-
-  #screen-admin .row button {
-    background: #fffaf8;
-    color: var(--text-light);
-    border-color: #d8c3a4;
-    box-shadow: none;
-  }
-
-  #screen-admin .row button:hover {
-    background: var(--pink-light);
-  }
-
-  /* --------------------------------
-     モーダル
-  -------------------------------- */
-
-  .modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(80,60,60,0.38);
-    backdrop-filter: blur(5px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-  }
-
-  .modal.active {
-    display: flex;
-  }
-
-  .modal-content {
-    background:
-      linear-gradient(
-        145deg,
-        rgba(255,255,255,0.98),
-        rgba(255,247,248,0.98)
-      );
-    padding: 30px 25px;
-    border-radius: 18px;
-    border: 1px solid var(--gold-light);
-    max-width: 340px;
-    width: 88%;
-    text-align: center;
-    box-shadow:
-      0 20px 50px rgba(80,60,60,0.2);
-  }
-
-  .modal-content h2 {
-    font-size: 20px;
-    margin-bottom: 22px;
-  }
-
-  .modal-content input {
-    width: 100%;
-    padding: 12px;
-    font-family: "Noto Serif JP", serif;
-    font-size: 18px;
-    margin: 10px 0 20px;
-    box-sizing: border-box;
-    border: 1px solid #ddc7ca;
-    border-radius: 8px;
-    background: #fffdfc;
-    color: var(--text);
-    text-align: center;
-    letter-spacing: 0.2em;
-    outline: none;
-  }
-
-  .modal-content input:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(199,164,106,0.12);
-  }
-
-  .error {
-    color: #b56d78;
-    font-size: 13px;
-    min-height: 18px;
-    margin-bottom: 5px;
-  }
-
-  /* --------------------------------
-     スマートフォン・タブレット対応
-  -------------------------------- */
-
-  @media (max-width: 600px) {
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Noto+Serif+JP:wght@400;500;600;700&display=swap');
+
+    :root {
+      --pink: #d99aa8;
+      --pink-light: #f9e9ed;
+      --pink-pale: #fff7f8;
+      --gold: #c7a46a;
+      --gold-light: #e7d2a7;
+      --ivory: #fffdf9;
+      --text: #5b4a4d;
+      --text-light: #8b777b;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Serif JP", serif;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(231,210,167,0.16) 0, transparent 28%),
+        radial-gradient(circle at 85% 85%, rgba(217,154,168,0.12) 0, transparent 30%),
+        linear-gradient(135deg, #fffdf9 0%, #fff7f8 50%, #fffdf9 100%);
+      color: var(--text);
+      letter-spacing: 0.04em;
+    }
+
+    body::before,
+    body::after {
+      content: "✦";
+      position: fixed;
+      color: rgba(199,164,106,0.22);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 80px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      top: 25px;
+      left: 30px;
+    }
+
+    body::after {
+      right: 30px;
+      bottom: 25px;
+    }
 
     .screen {
-      padding: 25px 15px;
-      min-height: 100vh;
+      display: none;
+      height: 100vh;
+      min-height: 600px;
+      padding: 35px 24px;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 1;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ================================
+       タイトル
+    ================================= */
+
+    h1,
+    h2 {
+      margin: 10px 0 20px;
+      text-align: center;
+      font-family: "Noto Serif JP", serif;
+      font-weight: 600;
+      color: var(--text);
     }
 
     h1 {
-      font-size: 34px;
+      font-size: clamp(34px, 6vw, 54px);
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+    }
+
+    h1::after {
+      content: "";
+      display: block;
+      width: 70px;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        var(--gold),
+        transparent
+      );
+      margin: 18px auto 0;
     }
 
     h2 {
-      font-size: 17px;
+      font-size: clamp(17px, 3vw, 23px);
+      font-weight: 500;
+      color: var(--text-light);
+      letter-spacing: 0.08em;
     }
 
-    button {
-      min-width: 135px;
-      padding: 13px 22px;
-      font-size: 16px;
+    /* 筆記体 */
+    .script {
+      font-family: "Great Vibes", cursive;
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.02em;
     }
 
+    /* ================================
+       スタート画面
+    ================================= */
+
+    #screen-start h1 {
+      font-size: clamp(42px, 8vw, 64px);
+      font-weight: 700;
+      color: #634e52;
+    }
+
+    #screen-start h1::before {
+      content: "Wedding Reception";
+      display: block;
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(38px, 7vw, 62px);
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0;
+      margin-bottom: -3px;
+    }
+
+    #screen-start h2 {
+      margin-bottom: 30px;
+    }
+
+    /*
+      Groom / Bride ボタン
+      英字なので筆記体
+    */
     #btn-groom,
     #btn-bride {
-      min-width: 145px;
+      min-width: 190px;
+      font-family: "Great Vibes", cursive;
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    /* ================================
+       ボタン
+    ================================= */
+
+    button {
+      padding: 14px 34px;
+      margin: 8px;
+      min-width: 150px;
+      font-family: "Noto Serif JP", serif;
+      font-size: 17px;
+      letter-spacing: 0.08em;
+      border-radius: 999px;
+      border: 1px solid var(--gold);
+      cursor: pointer;
+      background: linear-gradient(
+        135deg,
+        #dca4b0,
+        #c98696
+      );
+      color: white;
+      box-shadow:
+        0 5px 14px rgba(185, 125, 140, 0.18),
+        inset 0 1px 0 rgba(255,255,255,0.35);
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 8px 18px rgba(185, 125, 140, 0.25),
+        inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button.secondary {
+      background: rgba(255,255,255,0.8);
+      color: var(--text-light);
+      border-color: #d8c5b0;
+      box-shadow: 0 4px 10px rgba(100,80,80,0.08);
+    }
+
+    button.small {
+      min-width: auto;
+      font-size: 13px;
+      padding: 9px 18px;
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* ================================
+       管理者ボタン
+    ================================= */
+
+    .admin-link {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      font-size: 11px;
+      min-width: auto;
+      padding: 8px 15px !important;
+      background: rgba(255,255,255,0.7) !important;
+      color: #9b878b !important;
+      border: 1px solid #dbc8ae !important;
+      box-shadow: none !important;
+    }
+
+    /* ================================
+       ゲスト選択画面
+    ================================= */
+
+    #screen-select {
+      justify-content: center;
+    }
+
+    /*
+      Groom's Guests / Bride's Guests
+      英字なので筆記体
+    */
+    #select-title {
+      max-width: 800px;
+      margin-bottom: 25px;
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(34px, 6vw, 52px);
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.02em;
     }
 
     .guest-list {
-      max-height: 55vh;
-      padding: 10px;
+      max-height: 58vh;
+      overflow-y: auto;
+      width: 100%;
+      max-width: 620px;
+      border: 1px solid var(--gold-light);
+      border-radius: 16px;
+      padding: 14px;
+      box-sizing: border-box;
+      background: rgba(255,255,255,0.82);
+      box-shadow:
+        0 10px 30px rgba(120,90,90,0.08),
+        inset 0 0 0 4px rgba(231,210,167,0.12);
+    }
+
+    .guest-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .guest-list::-webkit-scrollbar-thumb {
+      background: #dec4c9;
+      border-radius: 10px;
     }
 
     .guest-item {
-      padding: 13px 12px;
-      font-size: 15px;
+      padding: 14px 17px;
+      margin: 6px 0;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #eee1e2;
+      background: rgba(255,255,255,0.75);
+      color: var(--text);
+      transition: all 0.18s ease;
+    }
+
+    .guest-item:hover {
+      border-color: var(--gold-light);
+      background: #fff8f9;
+    }
+
+    .guest-item.selected {
+      background: linear-gradient(
+        90deg,
+        #f9e7eb,
+        #fffaf8
+      );
+      border-color: var(--gold);
+      box-shadow:
+        0 3px 10px rgba(199,164,106,0.12);
+    }
+
+    .guest-item span.checked {
+      font-size: 11px;
+      color: #a68b58;
+      border: 1px solid #dcc898;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #fffaf0;
+    }
+
+    /* ================================
+       メッセージ画面
+    ================================= */
+
+    #message-title {
+      margin-bottom: 22px;
     }
 
     .message-photo {
-      max-height: 42vh;
+      max-width: 88vw;
+      max-height: 48vh;
+      object-fit: contain;
+      border-radius: 14px;
+      border: 5px solid white;
+      outline: 1px solid var(--gold-light);
+      box-shadow:
+        0 10px 30px rgba(100,80,80,0.18);
+      margin-bottom: 22px;
+      background: #faf7f5;
     }
 
     .message-text {
-      font-size: 19px;
+      font-size: 22px;
+      line-height: 1.9;
+      text-align: center;
+      padding: 0 20px;
+      color: var(--text);
     }
-  }
-</style>
+
+    #countdown {
+      font-size: 14px !important;
+      margin-top: 18px !important;
+      color: var(--text-light) !important;
+      letter-spacing: 0.05em;
+    }
+
+    #btn-message-back {
+      margin-top: 12px !important;
+    }
+
+    /* ================================
+       管理者画面
+    ================================= */
+
+    #screen-admin h1 {
+      margin-bottom: 15px;
+    }
+
+    .admin-table {
+      max-width: 800px;
+      width: 100%;
+      max-height: 58vh;
+      overflow-y: auto;
+      border: 1px solid var(--gold-light);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.88);
+      padding: 10px 14px;
+      box-sizing: border-box;
+      box-shadow: 0 8px 25px rgba(100,80,80,0.08);
+    }
+
+    .admin-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 5px;
+      border-bottom: 1px solid #f0e4e3;
+      font-size: 14px;
+    }
+
+    .admin-row:last-child {
+      border-bottom: none;
+    }
+
+    .admin-row span.side {
+      width: 60px;
+      color: var(--gold);
+      font-size: 12px;
+    }
+
+    .admin-row span.name {
+      flex: 1;
+      color: var(--text);
+    }
+
+    .admin-row span.status {
+      width: 80px;
+      text-align: center;
+    }
+
+    .admin-row input[type="checkbox"] {
+      transform: scale(1.3);
+      accent-color: var(--pink);
+    }
+
+    #screen-admin .row {
+      margin-bottom: 15px;
+    }
+
+    #screen-admin .row button {
+      background: #fffaf8;
+      color: var(--text-light);
+      border-color: #d8c3a4;
+      box-shadow: none;
+    }
+
+    #screen-admin .row button:hover {
+      background: var(--pink-light);
+    }
+
+    /* ================================
+       モーダル
+    ================================= */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(80,60,60,0.38);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,0.98),
+          rgba(255,247,248,0.98)
+        );
+      padding: 30px 25px;
+      border-radius: 18px;
+      border: 1px solid var(--gold-light);
+      max-width: 340px;
+      width: 88%;
+      text-align: center;
+      box-shadow:
+        0 20px 50px rgba(80,60,60,0.2);
+    }
+
+    .modal-content h2 {
+      font-size: 20px;
+      margin-bottom: 22px;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 12px;
+      font-family: "Noto Serif JP", serif;
+      font-size: 18px;
+      margin: 10px 0 20px;
+      box-sizing: border-box;
+      border: 1px solid #ddc7ca;
+      border-radius: 8px;
+      background: #fffdfc;
+      color: var(--text);
+      text-align: center;
+      letter-spacing: 0.2em;
+      outline: none;
+    }
+
+    .modal-content input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(199,164,106,0.12);
+    }
+
+    .error {
+      color: #b56d78;
+      font-size: 13px;
+      min-height: 18px;
+      margin-bottom: 5px;
+    }
+
+    /* ================================
+       スマートフォン・タブレット対応
+    ================================= */
+
+    @media (max-width: 600px) {
+
+      .screen {
+        padding: 25px 15px;
+        min-height: 100vh;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      h2 {
+        font-size: 17px;
+      }
+
+      #btn-groom,
+      #btn-bride {
+        min-width: 145px;
+        font-size: 29px;
+      }
+
+      .guest-list {
+        max-height: 55vh;
+        padding: 10px;
+      }
+
+      .guest-item {
+        padding: 13px 12px;
+        font-size: 15px;
+      }
+
+      #select-title {
+        font-size: 38px;
+      }
+
+      .message-photo {
+        max-height: 42vh;
+      }
+
+      .message-text {
+        font-size: 19px;
+      }
+    }
+  </style>
 </head>
 <body>
-
-  <!-- スタート画面 -->
+  <!-- =================================
+       スタート画面
+  ================================== -->
   <div id="screen-start" class="screen active">
-    <h1>結婚式受付</h1>
-    <h2>新郎・新婦を選んでください</h2>
-    <div class="row">
-      <button id="btn-groom">新郎側</button>
-      <button id="btn-bride">新婦側</button>
-    </div>
-    <button class="admin-link small" id="btn-admin-open">管理者</button>
-  </div>
+<h1>結婚式受付</h1>
 
-  <!-- 名前選択画面 -->
-  <div id="screen-select" class="screen">
-    <h1 id="select-title">ゲスト選択</h1>
-    <div class="guest-list" id="guest-list"></div>
-    <div class="row">
-      <button class="secondary" id="btn-select-back">戻る</button>
-      <button id="btn-select-confirm">決定</button>
-    </div>
-  </div>
+<h2>新郎・新婦を選んでください</h2>
 
-  <!-- メッセージ表示画面 -->
-<div id="screen-message" class="screen">
-  <h1 id="message-title">メッセージ</h1>
-  <img id="message-photo" class="message-photo" src="" alt="写真" />
-  <div id="message-text" class="message-text"></div>
-
-  <!-- 追加：カウントダウン表示 -->
-  <div id="countdown" style="font-size:20px; margin-top:20px; color:#555;">
-    20秒後にスタート画面へ戻ります
-  </div>
-
-  <!-- 追加：戻るボタン -->
-  <button id="btn-message-back" class="secondary" style="margin-top:20px;">
-    スタート画面に戻る
-  </button>
+<div class="row">
+  <!-- 表示は英字・筆記体、処理上のIDは変更なし -->
+  <button id="btn-groom">Groom</button>
+  <button id="btn-bride">Bride</button>
 </div>
 
+<button class="admin-link small" id="btn-admin-open">
+  管理者
+</button>
+  </div>
+  <!-- =================================
+       ゲスト選択画面
+  ================================== -->
+  <div id="screen-select" class="screen">
+<!-- JavaScriptで Groom's Guests / Bride's Guests を表示 -->
+<h1 id="select-title">Groom's Guests</h1>
 
-  <!-- 管理者画面 -->
+<div class="guest-list" id="guest-list"></div>
+
+<div class="row">
+  <button class="secondary" id="btn-select-back">
+    戻る
+  </button>
+
+  <button id="btn-select-confirm">
+    決定
+  </button>
+</div>
+  </div>
+  <!-- =================================
+       メッセージ表示画面
+  ================================== -->
+  <div id="screen-message" class="screen">
+<h1 id="message-title">
+  メッセージ
+</h1>
+
+<img
+  id="message-photo"
+  class="message-photo"
+  src=""
+  alt="写真"
+/>
+
+<div id="message-text" class="message-text"></div>
+
+<div
+  id="countdown"
+  style="font-size:20px; margin-top:20px;"
+>
+  20秒後にスタート画面へ戻ります
+</div>
+
+<button
+  id="btn-message-back"
+  class="secondary"
+  style="margin-top:20px;"
+>
+  スタート画面に戻る
+</button>
+  </div>
+  <!-- =================================
+       管理者画面
+  ================================== -->
   <div id="screen-admin" class="screen">
-    <h1>管理者画面</h1>
-    <div class="row">
-      <button class="small" data-filter="all">全員</button>
-      <button class="small" data-filter="groom">新郎側のみ</button>
-      <button class="small" data-filter="bride">新婦側のみ</button>
-    </div>
-    <div class="admin-table" id="admin-table"></div>
-    <button class="secondary" id="btn-admin-back">スタート画面に戻る</button>
-  </div>
+<h1>管理者画面</h1>
 
-  <!-- 管理者パスコードモーダル -->
+<div class="row">
+
+  <button class="small" data-filter="all">
+    全員
+  </button>
+
+  <button class="small" data-filter="groom">
+    Groom
+  </button>
+
+  <button class="small" data-filter="bride">
+    Bride
+  </button>
+
+</div>
+
+<div
+  class="admin-table"
+  id="admin-table"
+></div>
+
+<button
+  class="secondary"
+  id="btn-admin-back"
+>
+  スタート画面に戻る
+</button>
+  </div>
+  <!-- =================================
+       管理者パスコードモーダル
+  ================================== -->
   <div id="modal-admin" class="modal">
-    <div class="modal-content">
-      <h2>管理者パスコード</h2>
-      <input type="password" id="admin-pass-input" maxlength="4" placeholder="4桁の数字" />
-      <div id="admin-pass-error" class="error"></div>
-      <button id="btn-admin-pass-ok">OK</button>
-      <button class="secondary small" id="btn-admin-pass-cancel">キャンセル</button>
-    </div>
-  </div>
+<div class="modal-content">
 
+  <h2>管理者パスコード</h2>
+
+  <input
+    type="password"
+    id="admin-pass-input"
+    maxlength="4"
+    placeholder="4桁の数字"
+  />
+
+  <div
+    id="admin-pass-error"
+    class="error"
+  ></div>
+
+  <button id="btn-admin-pass-ok">
+    OK
+  </button>
+
+  <button
+    class="secondary small"
+    id="btn-admin-pass-cancel"
+  >
+    キャンセル
+  </button>
+
+</div>
+  </div>
+  <!-- =================================
+       JavaScript
+       ※動作ロジックは元コードから変更なし
+  ================================== -->
   <script>
+
     // ゲストデータ
     const guests = [
       { id: 1, side: "bride", name: "坊向信也", message: "坊向信也", photo: "photos/demo.jpg" },
@@ -650,20 +742,34 @@
     let timerId = null;
     let checkedMap = {};
 
+    // =================================
     // 画面切り替え
+    // =================================
+
     function showScreen(id) {
-      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
+      document
+        .querySelectorAll(".screen")
+        .forEach(s => s.classList.remove("active"));
+
+      document
+        .getElementById(id)
+        .classList.add("active");
     }
 
+    // =================================
     // localStorage読み込み
+    // =================================
+
     function loadChecked() {
       const raw = localStorage.getItem(CHECK_KEY);
       checkedMap = raw ? JSON.parse(raw) : {};
     }
 
     function saveChecked() {
-      localStorage.setItem(CHECK_KEY, JSON.stringify(checkedMap));
+      localStorage.setItem(
+        CHECK_KEY,
+        JSON.stringify(checkedMap)
+      );
     }
 
     function isChecked(id) {
@@ -675,48 +781,94 @@
       saveChecked();
     }
 
+    // =================================
     // スタート画面イベント
-    document.getElementById("btn-groom").addEventListener("click", () => {
-      currentSide = "groom";
-      selectedGuestId = null;
-      renderGuestList();
-      showScreen("screen-select");
-    });
+    // =================================
 
-    document.getElementById("btn-bride").addEventListener("click", () => {
-      currentSide = "bride";
-      selectedGuestId = null;
-      renderGuestList();
-      showScreen("screen-select");
-    });
+    document
+      .getElementById("btn-groom")
+      .addEventListener("click", () => {
 
-    document.getElementById("btn-select-back").addEventListener("click", () => {
-      selectedGuestId = null;
-      showScreen("screen-start");
-    });
+        currentSide = "groom";
+        selectedGuestId = null;
 
+        renderGuestList();
+
+        showScreen("screen-select");
+      });
+
+    document
+      .getElementById("btn-bride")
+      .addEventListener("click", () => {
+
+        currentSide = "bride";
+        selectedGuestId = null;
+
+        renderGuestList();
+
+        showScreen("screen-select");
+      });
+
+    document
+      .getElementById("btn-select-back")
+      .addEventListener("click", () => {
+
+        selectedGuestId = null;
+
+        showScreen("screen-start");
+      });
+
+    // =================================
     // 名前一覧表示
-    function renderGuestList() {
-      const title = currentSide === "groom" ? "新郎側のゲストを選んでください" : "新婦側のゲストを選んでください";
-      document.getElementById("select-title").textContent = title;
+    // =================================
 
-      const listEl = document.getElementById("guest-list");
+    function renderGuestList() {
+
+      /*
+        新郎側 → Groom's Guests
+        新婦側 → Bride's Guests
+
+        英字タイトルなのでCSSで筆記体表示
+      */
+      const title =
+        currentSide === "groom"
+          ? "Groom's Guests"
+          : "Bride's Guests";
+
+      document
+        .getElementById("select-title")
+        .textContent = title;
+
+      const listEl =
+        document.getElementById("guest-list");
+
       listEl.innerHTML = "";
 
       guests
         .filter(g => g.side === currentSide)
         .forEach(g => {
-          const item = document.createElement("div");
+
+          const item =
+            document.createElement("div");
+
           item.className = "guest-item";
+
           if (g.id === selectedGuestId) {
             item.classList.add("selected");
           }
-          const nameSpan = document.createElement("span");
+
+          const nameSpan =
+            document.createElement("span");
+
           nameSpan.textContent = g.name;
 
-          const statusSpan = document.createElement("span");
+          const statusSpan =
+            document.createElement("span");
+
           if (isChecked(g.id)) {
+
             statusSpan.className = "checked";
+
             statusSpan.textContent = "受付済み";
           }
 
@@ -724,7 +876,9 @@
           item.appendChild(statusSpan);
 
           item.addEventListener("click", () => {
+
             selectedGuestId = g.id;
+
             renderGuestList();
           });
 
@@ -732,104 +886,218 @@
         });
     }
 
-// 決定ボタン → メッセージ画面へ
-document.getElementById("btn-select-confirm").addEventListener("click", () => {
-  if (!selectedGuestId) {
-    alert("名前を選択してください。");
-    return;
-  }
-  const guest = guests.find(g => g.id === selectedGuestId);
-  if (!guest) return;
+    // =================================
+    // 決定ボタン → メッセージ画面
+    // =================================
 
-  setChecked(guest.id, true);
+    document
+      .getElementById("btn-select-confirm")
+      .addEventListener("click", () => {
 
-  document.getElementById("message-title").textContent = guest.name + " さんへのメッセージ";
-  document.getElementById("message-photo").src = guest.photo;
-  document.getElementById("message-text").textContent = guest.message;
+        if (!selectedGuestId) {
 
-  showScreen("screen-message");
+          alert("名前を選択してください。");
 
-  // カウントダウン処理
-  let remaining = 20;
-  const countdownEl = document.getElementById("countdown");
-  countdownEl.textContent = `${remaining}秒後にスタート画面へ戻ります`;
+          return;
+        }
 
-  if (timerId) clearInterval(timerId);
-  timerId = setInterval(() => {
-    remaining--;
-    countdownEl.textContent = `${remaining}秒後にスタート画面へ戻ります`;
+        const guest =
+          guests.find(g => g.id === selectedGuestId);
 
-    if (remaining <= 0) {
-      clearInterval(timerId);
-      selectedGuestId = null;
-      showScreen("screen-start");
-    }
-  }, 1000);
-});
+        if (!guest) return;
 
-// 戻るボタン
-document.getElementById("btn-message-back").addEventListener("click", () => {
-  if (timerId) clearInterval(timerId);
-  selectedGuestId = null;
-  showScreen("screen-start");
-});
+        setChecked(guest.id, true);
 
+        document
+          .getElementById("message-title")
+          .textContent =
+          guest.name + " さんへのメッセージ";
 
+        document
+          .getElementById("message-photo")
+          .src = guest.photo;
+
+        document
+          .getElementById("message-text")
+          .textContent = guest.message;
+
+        showScreen("screen-message");
+
+        // カウントダウン処理
+
+        let remaining = 20;
+
+        const countdownEl =
+          document.getElementById("countdown");
+
+        countdownEl.textContent =
+          `${remaining}秒後にスタート画面へ戻ります`;
+
+        if (timerId) {
+          clearInterval(timerId);
+        }
+
+        timerId = setInterval(() => {
+
+          remaining--;
+
+          countdownEl.textContent =
+            `${remaining}秒後にスタート画面へ戻ります`;
+
+          if (remaining <= 0) {
+
+            clearInterval(timerId);
+
+            selectedGuestId = null;
+
+            showScreen("screen-start");
+          }
+
+        }, 1000);
+      });
+
+    // =================================
+    // メッセージ画面から戻る
+    // =================================
+
+    document
+      .getElementById("btn-message-back")
+      .addEventListener("click", () => {
+
+        if (timerId) {
+          clearInterval(timerId);
+        }
+
+        selectedGuestId = null;
+
+        showScreen("screen-start");
+      });
+
+    // =================================
     // 管理者モーダル
-    const modalAdmin = document.getElementById("modal-admin");
-    const adminPassInput = document.getElementById("admin-pass-input");
-    const adminPassError = document.getElementById("admin-pass-error");
+    // =================================
 
-    document.getElementById("btn-admin-open").addEventListener("click", () => {
-      adminPassInput.value = "";
-      adminPassError.textContent = "";
-      modalAdmin.classList.add("active");
-      adminPassInput.focus();
-    });
+    const modalAdmin =
+      document.getElementById("modal-admin");
 
-    document.getElementById("btn-admin-pass-cancel").addEventListener("click", () => {
-      modalAdmin.classList.remove("active");
-    });
+    const adminPassInput =
+      document.getElementById("admin-pass-input");
 
-    document.getElementById("btn-admin-pass-ok").addEventListener("click", () => {
-      const val = adminPassInput.value.trim();
-      if (val === ADMIN_PASS) {
+    const adminPassError =
+      document.getElementById("admin-pass-error");
+
+    document
+      .getElementById("btn-admin-open")
+      .addEventListener("click", () => {
+
+        adminPassInput.value = "";
+
+        adminPassError.textContent = "";
+
+        modalAdmin.classList.add("active");
+
+        adminPassInput.focus();
+      });
+
+    document
+      .getElementById("btn-admin-pass-cancel")
+      .addEventListener("click", () => {
+
         modalAdmin.classList.remove("active");
-        renderAdminTable("all");
-        showScreen("screen-admin");
-      } else {
-        adminPassError.textContent = "パスコードが違います。";
-      }
-    });
+      });
 
+    document
+      .getElementById("btn-admin-pass-ok")
+      .addEventListener("click", () => {
+
+        const val =
+          adminPassInput.value.trim();
+
+        if (val === ADMIN_PASS) {
+
+          modalAdmin.classList.remove("active");
+
+          renderAdminTable("all");
+
+          showScreen("screen-admin");
+
+        } else {
+
+          adminPassError.textContent =
+            "パスコードが違います。";
+        }
+      });
+
+    // =================================
     // 管理者画面
+    // =================================
+
     function renderAdminTable(filter) {
-      const table = document.getElementById("admin-table");
+
+      const table =
+        document.getElementById("admin-table");
+
       table.innerHTML = "";
 
       guests
-        .filter(g => filter === "all" ? true : g.side === filter)
+        .filter(g =>
+          filter === "all"
+            ? true
+            : g.side === filter
+        )
         .forEach(g => {
-          const row = document.createElement("div");
+
+          const row =
+            document.createElement("div");
+
           row.className = "admin-row";
 
-          const sideSpan = document.createElement("span");
-          sideSpan.className = "side";
-          sideSpan.textContent = g.side === "groom" ? "新郎" : "新婦";
+          const sideSpan =
+            document.createElement("span");
 
-          const nameSpan = document.createElement("span");
+          sideSpan.className = "side";
+
+          /*
+            管理者画面も
+            新郎 → Groom
+            新婦 → Bride
+          */
+          sideSpan.textContent =
+            g.side === "groom"
+              ? "Groom"
+              : "Bride";
+
+          const nameSpan =
+            document.createElement("span");
+
           nameSpan.className = "name";
+
           nameSpan.textContent = g.name;
 
-          const statusSpan = document.createElement("span");
+          const statusSpan =
+            document.createElement("span");
+
           statusSpan.className = "status";
 
-          const checkbox = document.createElement("input");
+          const checkbox =
+            document.createElement("input");
+
           checkbox.type = "checkbox";
-          checkbox.checked = isChecked(g.id);
-          checkbox.addEventListener("change", () => {
-            setChecked(g.id, checkbox.checked);
-          });
+
+          checkbox.checked =
+            isChecked(g.id);
+
+          checkbox.addEventListener(
+            "change",
+            () => {
+
+              setChecked(
+                g.id,
+                checkbox.checked
+              );
+
+            }
+          );
 
           statusSpan.appendChild(checkbox);
 
@@ -841,19 +1109,37 @@ document.getElementById("btn-message-back").addEventListener("click", () => {
         });
     }
 
-    document.querySelectorAll("#screen-admin .row button").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const filter = btn.getAttribute("data-filter");
-        renderAdminTable(filter);
+    document
+      .querySelectorAll(
+        "#screen-admin .row button"
+      )
+      .forEach(btn => {
+
+        btn.addEventListener(
+          "click",
+          () => {
+
+            const filter =
+              btn.getAttribute("data-filter");
+
+            renderAdminTable(filter);
+          }
+        );
       });
-    });
 
-    document.getElementById("btn-admin-back").addEventListener("click", () => {
-      showScreen("screen-start");
-    });
+    document
+      .getElementById("btn-admin-back")
+      .addEventListener("click", () => {
 
+        showScreen("screen-start");
+      });
+
+    // =================================
     // 初期化
+    // =================================
+
     loadChecked();
+
   </script>
 </body>
 </html>
