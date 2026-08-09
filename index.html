@@ -596,6 +596,23 @@ document.getElementById("btn-message-back").addEventListener("click", () => {
     document.getElementById("btn-admin-back").addEventListener("click", () => {
       showScreen("screen-start");
     });
+    // 管理者パスコード OK ボタン
+   document.getElementById("btn-admin-pass-ok").addEventListener("click", () => {
+     const pass = document.getElementById("admin-pass-input").value;
+
+     if (pass === "1206") {
+       document.getElementById("modal-admin").classList.remove("active");
+       showScreen("screen-admin");
+     } else {
+       document.getElementById("admin-pass-error").textContent = "パスコードが違います";
+     }
+   });
+
+   // 管理者パスコード キャンセル
+   document.getElementById("btn-admin-pass-cancel").addEventListener("click", () => {
+     document.getElementById("modal-admin").classList.remove("active");
+   });
+
 
     // 初期化
     loadChecked();
