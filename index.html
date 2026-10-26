@@ -28,22 +28,9 @@
       margin: 0;
       font-family: "Noto Serif JP", serif;
       background:
-        radial-gradient(
-          circle at 15% 15%,
-          rgba(231,210,167,0.16) 0,
-          transparent 28%
-        ),
-        radial-gradient(
-          circle at 85% 85%,
-          rgba(217,154,168,0.12) 0,
-          transparent 30%
-        ),
-        linear-gradient(
-          135deg,
-          #fffdf9 0%,
-          #fff7f8 50%,
-          #fffdf9 100%
-        );
+        radial-gradient(circle at 15% 15%, rgba(231,210,167,0.16) 0, transparent 28%),
+        radial-gradient(circle at 85% 85%, rgba(217,154,168,0.12) 0, transparent 30%),
+        linear-gradient(135deg, #fffdf9 0%, #fff7f8 50%, #fffdf9 100%);
       color: var(--text);
       letter-spacing: 0.04em;
     }
@@ -86,8 +73,7 @@
       justify-content: center;
     }
 
-    h1,
-    h2 {
+    h1, h2 {
       margin: 10px 0 20px;
       text-align: center;
       font-family: "Noto Serif JP", serif;
@@ -106,12 +92,7 @@
       display: block;
       width: 70px;
       height: 1px;
-      background: linear-gradient(
-        to right,
-        transparent,
-        var(--gold),
-        transparent
-      );
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
       margin: 18px auto 0;
     }
 
@@ -130,6 +111,25 @@
       justify-content: center;
       padding-top: 20px;
       padding-bottom: 20px;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    /* 最初の画面だけに背景写真を表示 */
+    #screen-start::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,253,249,0.58),
+          rgba(255,247,248,0.48),
+          rgba(255,253,249,0.58)
+        ),
+        url("photos/takano.jpg") center center / cover no-repeat;
+      z-index: -1;
+      pointer-events: none;
     }
 
     #screen-start h1 {
@@ -154,61 +154,48 @@
       align-items: center;
     }
 
-    /* =================================
-       Groom / Bride ボタン
-    ================================= */
+    /* Groom / Bride ボタン */
 
     .side-button {
       width: 380px;
       height: 300px;
-
       margin: 0;
-
       border-radius: 28px;
-
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-
       color: white;
-
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .groom-button {
       background: #3F4A59;
       border: 1px solid #3F4A59;
-
       box-shadow:
-        0 10px 25px rgba(63, 74, 89, 0.28),
+        0 10px 25px rgba(63,74,89,0.28),
         inset 0 1px 0 rgba(255,255,255,0.2);
     }
 
     .groom-button:hover {
       transform: translateY(-4px);
-
       box-shadow:
-        0 15px 32px rgba(63, 74, 89, 0.35),
+        0 15px 32px rgba(63,74,89,0.35),
         inset 0 1px 0 rgba(255,255,255,0.25);
     }
 
     .bride-button {
       background: #A67189;
       border: 1px solid #A67189;
-
       box-shadow:
-        0 10px 25px rgba(166, 113, 137, 0.25),
+        0 10px 25px rgba(166,113,137,0.25),
         inset 0 1px 0 rgba(255,255,255,0.25);
     }
 
     .bride-button:hover {
       transform: translateY(-4px);
-
       box-shadow:
-        0 15px 32px rgba(166, 113, 137, 0.32),
+        0 15px 32px rgba(166,113,137,0.32),
         inset 0 1px 0 rgba(255,255,255,0.3);
     }
 
@@ -226,49 +213,34 @@
       font-weight: 400;
       color: #ffffff;
       letter-spacing: 0.02em;
-
       margin-top: 22px;
       line-height: 1;
     }
 
-    /* =================================
-       共通ボタン
-    ================================= */
+    /* 共通ボタン */
 
     button {
       padding: 14px 34px;
       margin: 8px;
       min-width: 150px;
-
       font-family: "Noto Serif JP", serif;
       font-size: 17px;
       letter-spacing: 0.08em;
-
       border-radius: 999px;
       border: 1px solid var(--gold);
-
       cursor: pointer;
-
-      background: linear-gradient(
-        135deg,
-        #dca4b0,
-        #c98696
-      );
-
+      background: linear-gradient(135deg, #dca4b0, #c98696);
       color: white;
-
       box-shadow:
-        0 5px 14px rgba(185, 125, 140, 0.18),
+        0 5px 14px rgba(185,125,140,0.18),
         inset 0 1px 0 rgba(255,255,255,0.35);
-
       transition: all 0.2s ease;
     }
 
     button:hover {
       transform: translateY(-2px);
-
       box-shadow:
-        0 8px 18px rgba(185, 125, 140, 0.25),
+        0 8px 18px rgba(185,125,140,0.25),
         inset 0 1px 0 rgba(255,255,255,0.4);
     }
 
@@ -280,9 +252,7 @@
       background: rgba(255,255,255,0.8);
       color: var(--text-light);
       border-color: #d8c5b0;
-
-      box-shadow:
-        0 4px 10px rgba(100,80,80,0.08);
+      box-shadow: 0 4px 10px rgba(100,80,80,0.08);
     }
 
     button.small {
@@ -298,68 +268,46 @@
       justify-content: center;
     }
 
-    /* =================================
-       管理者ボタン
-    ================================= */
+    /* 管理者ボタン */
 
     .admin-link {
       position: fixed;
       right: 18px;
       bottom: 18px;
-
       font-size: 11px;
-
       min-width: auto;
       padding: 8px 15px !important;
-
       background: rgba(255,255,255,0.7) !important;
       color: #9b878b !important;
-
       border: 1px solid #dbc8ae !important;
-
       box-shadow: none !important;
     }
 
-    /* =================================
-       ゲスト選択画面
-    ================================= */
+    /* ゲスト選択画面 */
 
     #screen-select {
       justify-content: center;
     }
 
-    /*
-      Groom's Guests / Bride's Guests
-    */
     #select-title {
       max-width: 800px;
       margin-bottom: 25px;
-
       font-family: "Great Vibes", cursive;
       font-size: clamp(34px, 6vw, 52px);
       font-weight: 400;
-
       color: var(--gold);
       letter-spacing: 0.02em;
     }
 
-    /*
-      ゲスト一覧
-    */
     .guest-list {
       max-height: 58vh;
       overflow-y: auto;
-
       width: 100%;
       max-width: 620px;
-
       border: 1px solid var(--gold-light);
       border-radius: 16px;
-
       padding: 14px;
-
       background: rgba(255,255,255,0.82);
-
       box-shadow:
         0 10px 30px rgba(120,90,90,0.08),
         inset 0 0 0 4px rgba(231,210,167,0.12);
@@ -374,35 +322,20 @@
       border-radius: 10px;
     }
 
-    /*
-      ゲスト項目
-
-      名前を項目の中央に配置
-    */
     .guest-item {
       position: relative;
-
       min-height: 80px;
-
-      padding: 14px 80px 14px 80px;
+      padding: 14px 80px;
       margin: 6px 0;
-
       border-radius: 10px;
-
       cursor: pointer;
-
       display: flex;
       justify-content: center;
       align-items: center;
-
       text-align: center;
-
       border: 1px solid #eee1e2;
-
       background: rgba(255,255,255,0.75);
-
       color: var(--text);
-
       transition: all 0.18s ease;
     }
 
@@ -412,74 +345,38 @@
     }
 
     .guest-item.selected {
-      background: linear-gradient(
-        90deg,
-        #f9e7eb,
-        #fffaf8
-      );
-
+      background: linear-gradient(90deg, #f9e7eb, #fffaf8);
       border-color: var(--gold);
-
-      box-shadow:
-        0 3px 10px rgba(199,164,106,0.12);
+      box-shadow: 0 3px 10px rgba(199,164,106,0.12);
     }
 
-    /*
-      ゲスト名
-
-      これまでの約2倍
-    */
     .guest-item > span:first-child {
       display: block;
-
       width: 100%;
-
       font-family: "Noto Serif JP", serif;
-
       font-size: 30px;
-
       font-weight: 600;
-
       line-height: 1.5;
-
       letter-spacing: 0.08em;
-
       text-align: center;
-
       color: var(--text);
     }
 
-    /*
-      受付済み表示
-
-      名前中央を維持したまま右端に配置
-    */
     .guest-item span.checked {
       position: absolute;
-
       right: 18px;
       top: 50%;
-
       transform: translateY(-50%);
-
       font-size: 11px;
-
       color: #a68b58;
-
       border: 1px solid #dcc898;
-
       padding: 3px 8px;
-
       border-radius: 999px;
-
       background: #fffaf0;
-
       white-space: nowrap;
     }
 
-    /* =================================
-       メッセージ画面
-    ================================= */
+    /* メッセージ画面 */
 
     #message-title {
       margin-bottom: 22px;
@@ -488,40 +385,27 @@
     .message-photo {
       max-width: 88vw;
       max-height: 48vh;
-
       object-fit: contain;
-
       border-radius: 14px;
-
       border: 5px solid white;
-
       outline: 1px solid var(--gold-light);
-
-      box-shadow:
-        0 10px 30px rgba(100,80,80,0.18);
-
+      box-shadow: 0 10px 30px rgba(100,80,80,0.18);
       margin-bottom: 22px;
-
       background: #faf7f5;
     }
 
     .message-text {
       font-size: 22px;
       line-height: 1.9;
-
       text-align: center;
-
       padding: 0 20px;
-
       color: var(--text);
     }
 
     #countdown {
       font-size: 14px !important;
       margin-top: 18px !important;
-
       color: var(--text-light) !important;
-
       letter-spacing: 0.05em;
     }
 
@@ -529,9 +413,7 @@
       margin-top: 12px !important;
     }
 
-    /* =================================
-       管理者画面
-    ================================= */
+    /* 管理者画面 */
 
     #screen-admin h1 {
       margin-bottom: 15px;
@@ -540,32 +422,21 @@
     .admin-table {
       max-width: 800px;
       width: 100%;
-
       max-height: 58vh;
-
       overflow-y: auto;
-
       border: 1px solid var(--gold-light);
-
       border-radius: 14px;
-
       background: rgba(255,255,255,0.88);
-
       padding: 10px 14px;
-
-      box-shadow:
-        0 8px 25px rgba(100,80,80,0.08);
+      box-shadow: 0 8px 25px rgba(100,80,80,0.08);
     }
 
     .admin-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-
       padding: 10px 5px;
-
       border-bottom: 1px solid #f0e4e3;
-
       font-size: 14px;
     }
 
@@ -575,9 +446,7 @@
 
     .admin-row span.side {
       width: 80px;
-
       color: var(--gold);
-
       font-size: 12px;
     }
 
@@ -602,11 +471,8 @@
 
     #screen-admin .row button {
       background: #fffaf8;
-
       color: var(--text-light);
-
       border-color: #d8c3a4;
-
       box-shadow: none;
     }
 
@@ -614,23 +480,16 @@
       background: var(--pink-light);
     }
 
-    /* =================================
-       モーダル
-    ================================= */
+    /* モーダル */
 
     .modal {
       position: fixed;
       inset: 0;
-
       background: rgba(80,60,60,0.38);
-
       backdrop-filter: blur(5px);
-
       display: none;
-
       align-items: center;
       justify-content: center;
-
       z-index: 100;
     }
 
@@ -639,26 +498,14 @@
     }
 
     .modal-content {
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255,255,255,0.98),
-          rgba(255,247,248,0.98)
-        );
-
+      background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(255,247,248,0.98));
       padding: 30px 25px;
-
       border-radius: 18px;
-
       border: 1px solid var(--gold-light);
-
       max-width: 340px;
       width: 88%;
-
       text-align: center;
-
-      box-shadow:
-        0 20px 50px rgba(80,60,60,0.2);
+      box-shadow: 0 20px 50px rgba(80,60,60,0.2);
     }
 
     .modal-content h2 {
@@ -668,54 +515,35 @@
 
     .modal-content input {
       width: 100%;
-
       padding: 12px;
-
       font-family: "Noto Serif JP", serif;
       font-size: 18px;
-
       margin: 10px 0 20px;
-
       box-sizing: border-box;
-
       border: 1px solid #ddc7ca;
-
       border-radius: 8px;
-
       background: #fffdfc;
-
       color: var(--text);
-
       text-align: center;
-
       letter-spacing: 0.2em;
-
       outline: none;
     }
 
     .modal-content input:focus {
       border-color: var(--gold);
-
-      box-shadow:
-        0 0 0 3px rgba(199,164,106,0.12);
+      box-shadow: 0 0 0 3px rgba(199,164,106,0.12);
     }
 
     .error {
       color: #b56d78;
-
       font-size: 13px;
-
       min-height: 18px;
-
       margin-bottom: 5px;
     }
 
-    /* =================================
-       タブレット
-    ================================= */
+    /* タブレット */
 
     @media (max-width: 850px) {
-
       #screen-start h1 {
         font-size: clamp(80px, 14vw, 120px);
       }
@@ -742,12 +570,9 @@
       }
     }
 
-    /* =================================
-       スマートフォン
-    ================================= */
+    /* スマートフォン */
 
     @media (max-width: 600px) {
-
       .screen {
         padding: 25px 15px;
         min-height: 100vh;
@@ -778,10 +603,6 @@
         margin-top: 12px;
       }
 
-      /*
-        スマートフォンでも名前を大きく表示
-        名前は中央固定
-      */
       .guest-list {
         max-height: 55vh;
         padding: 10px;
@@ -814,15 +635,12 @@
         font-size: 19px;
       }
     }
-
   </style>
 </head>
 
 <body>
 
-  <!-- =================================
-       スタート画面
-  ================================== -->
+  <!-- スタート画面 -->
 
   <div id="screen-start" class="screen active">
 
@@ -830,78 +648,44 @@
 
     <div class="row">
 
-      <!-- Groom -->
-      <button
-        id="btn-groom"
-        class="side-button groom-button"
-      >
+      <button id="btn-groom" class="side-button groom-button">
         <span class="side-title">Groom</span>
         <span class="person-name">-Naoki-</span>
       </button>
 
-      <!-- Bride -->
-      <button
-        id="btn-bride"
-        class="side-button bride-button"
-      >
+      <button id="btn-bride" class="side-button bride-button">
         <span class="side-title">Bride</span>
         <span class="person-name">-Mika-</span>
       </button>
 
     </div>
 
-    <button
-      class="admin-link small"
-      id="btn-admin-open"
-    >
+    <button class="admin-link small" id="btn-admin-open">
       管理者
     </button>
 
   </div>
 
-
-  <!-- =================================
-       ゲスト選択画面
-  ================================== -->
+  <!-- ゲスト選択画面 -->
 
   <div id="screen-select" class="screen">
 
-    <h1 id="select-title">
-      Groom's Guests
-    </h1>
+    <h1 id="select-title">Groom's Guests</h1>
 
-    <div
-      class="guest-list"
-      id="guest-list"
-    ></div>
+    <div class="guest-list" id="guest-list"></div>
 
     <div class="row">
-
-      <button
-        class="secondary"
-        id="btn-select-back"
-      >
-        戻る
-      </button>
-
-      <button id="btn-select-confirm">
-        決定
-      </button>
-
+      <button class="secondary" id="btn-select-back">戻る</button>
+      <button id="btn-select-confirm">決定</button>
     </div>
 
   </div>
 
-
-  <!-- =================================
-       メッセージ表示画面
-  ================================== -->
+  <!-- メッセージ表示画面 -->
 
   <div id="screen-message" class="screen">
 
-    <h1 id="message-title">
-      メッセージ
-    </h1>
+    <h1 id="message-title">メッセージ</h1>
 
     <img
       id="message-photo"
@@ -910,91 +694,45 @@
       alt="写真"
     />
 
-    <div
-      id="message-text"
-      class="message-text"
-    ></div>
+    <div id="message-text" class="message-text"></div>
 
-    <div
-      id="countdown"
-      style="font-size:20px; margin-top:20px;"
-    >
+    <div id="countdown" style="font-size:20px; margin-top:20px;">
       20秒後にスタート画面へ戻ります
     </div>
 
-    <button
-      id="btn-message-back"
-      class="secondary"
-      style="margin-top:20px;"
-    >
+    <button id="btn-message-back" class="secondary" style="margin-top:20px;">
       スタート画面に戻る
     </button>
 
   </div>
 
-
-  <!-- =================================
-       管理者画面
-  ================================== -->
+  <!-- 管理者画面 -->
 
   <div id="screen-admin" class="screen">
 
     <h1>管理者画面</h1>
 
     <div class="row">
-
-      <button
-        class="small"
-        data-filter="all"
-      >
-        全員
-      </button>
-
-      <button
-        class="small"
-        data-filter="groom"
-      >
-        Groom
-      </button>
-
-      <button
-        class="small"
-        data-filter="bride"
-      >
-        Bride
-      </button>
-
+      <button class="small" data-filter="all">全員</button>
+      <button class="small" data-filter="groom">Groom</button>
+      <button class="small" data-filter="bride">Bride</button>
     </div>
 
-    <div
-      class="admin-table"
-      id="admin-table"
-    ></div>
+    <div class="admin-table" id="admin-table"></div>
 
-    <button
-      class="secondary"
-      id="btn-admin-back"
-    >
+    <button class="secondary" id="btn-admin-back">
       スタート画面に戻る
     </button>
 
   </div>
 
+  <!-- 管理者パスコードモーダル -->
 
-  <!-- =================================
-       管理者パスコードモーダル
-  ================================== -->
-
-  <div
-    id="modal-admin"
-    class="modal"
-  >
+  <div id="modal-admin" class="modal">
 
     <div class="modal-content">
 
-      <h2>
-        管理者パスコード
-      </h2>
+      <h2>管理者パスコード</h2>
 
       <input
         type="password"
@@ -1003,19 +741,11 @@
         placeholder="4桁の数字"
       />
 
-      <div
-        id="admin-pass-error"
-        class="error"
-      ></div>
+      <div id="admin-pass-error" class="error"></div>
 
-      <button id="btn-admin-pass-ok">
-        OK
-      </button>
+      <button id="btn-admin-pass-ok">OK</button>
 
-      <button
-        class="secondary small"
-        id="btn-admin-pass-cancel"
-      >
+      <button class="secondary small" id="btn-admin-pass-cancel">
         キャンセル
       </button>
 
@@ -1023,14 +753,9 @@
 
   </div>
 
-
-  <!-- =================================
-       JavaScript
-       ※画面遷移・処理は変更なし
-  ================================== -->
+  <!-- JavaScript -->
 
   <script>
-
     // ゲストデータ
     const guests = [
       { id: 1, side: "bride", name: "坊向　信也", message: "緊張してる？一瞬一瞬を楽しもうね！バージンロード一緒に歩こう！", photo: "photos/papa.jpg" },
@@ -1047,7 +772,7 @@
       { id: 12, side: "bride", name: "袴田　唯", message: "神戸旅行楽しんでる？遠方からありがとうね！たくさん楽しんでね！", photo: "photos/idayui.jpg" },
       { id: 13, side: "bride", name: "周史　未来", message: "神戸へようこそ！いっぱい食べて飲んで楽しんでね！", photo: "photos/shusi.jpg" },
       { id: 14, side: "bride", name: "川島　菜央", message: "神戸へようこそ！いっぱい食べて飲んで楽しんでね！", photo: "photos/nao.jpg" },
-      { id: 15, side: "bride", name: "子安　香奈", message: "香奈〜！来てくれてありがとう！2018年の写真から2人とも大人になったね！今日はたくさん楽しんでね！", photo: "photos/kana2.jpg" },
+      { id: 15, side: "bride", name: "子安　香奈", message: "香奈〜！来てくれてありがとう！2018年の写真から2人とも大人になったね！今日はたくさん楽しんでね！", photo: "photos/kana.jpg" },
       { id: 16, side: "bride", name: "久保　夏実", message: "結婚式めっちゃ良かったよ〜！私たちの結婚式も楽しんでね！", photo: "photos/natsu.jpg" },
       { id: 17, side: "bride", name: "坊向　友美", message: "朝早くからありがとう！妹の晴れ姿見届けて下さい！", photo: "photos/tomomi.jpg" },
       { id: 18, side: "bride", name: "坊向　勇也", message: "勇也の撮る写真期待してるよ！式もたくさん楽しんでね！", photo: "photos/yuya.jpg" },
@@ -1087,13 +812,8 @@
 
     // 画面切り替え
     function showScreen(id) {
-      document
-        .querySelectorAll(".screen")
-        .forEach(s => s.classList.remove("active"));
-
-      document
-        .getElementById(id)
-        .classList.add("active");
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
     }
 
     // localStorage読み込み
@@ -1103,10 +823,7 @@
     }
 
     function saveChecked() {
-      localStorage.setItem(
-        CHECK_KEY,
-        JSON.stringify(checkedMap)
-      );
+      localStorage.setItem(CHECK_KEY, JSON.stringify(checkedMap));
     }
 
     function isChecked(id) {
@@ -1119,312 +836,189 @@
     }
 
     // スタート画面イベント
-    document
-      .getElementById("btn-groom")
-      .addEventListener("click", () => {
+    document.getElementById("btn-groom").addEventListener("click", () => {
+      currentSide = "groom";
+      selectedGuestId = null;
+      renderGuestList();
+      showScreen("screen-select");
+    });
 
-        currentSide = "groom";
-        selectedGuestId = null;
+    document.getElementById("btn-bride").addEventListener("click", () => {
+      currentSide = "bride";
+      selectedGuestId = null;
+      renderGuestList();
+      showScreen("screen-select");
+    });
 
-        renderGuestList();
-        showScreen("screen-select");
-      });
-
-    document
-      .getElementById("btn-bride")
-      .addEventListener("click", () => {
-
-        currentSide = "bride";
-        selectedGuestId = null;
-
-        renderGuestList();
-        showScreen("screen-select");
-      });
-
-    document
-      .getElementById("btn-select-back")
-      .addEventListener("click", () => {
-
-        selectedGuestId = null;
-        showScreen("screen-start");
-      });
+    document.getElementById("btn-select-back").addEventListener("click", () => {
+      selectedGuestId = null;
+      showScreen("screen-start");
+    });
 
     // 名前一覧表示
     function renderGuestList() {
+      const title = currentSide === "groom" ? "Groom's Guests" : "Bride's Guests";
+      document.getElementById("select-title").textContent = title;
 
-      const title =
-        currentSide === "groom"
-          ? "Groom's Guests"
-          : "Bride's Guests";
-
-      document
-        .getElementById("select-title")
-        .textContent = title;
-
-      const listEl =
-        document.getElementById("guest-list");
-
+      const listEl = document.getElementById("guest-list");
       listEl.innerHTML = "";
 
-      guests
-        .filter(g => g.side === currentSide)
-        .forEach(g => {
+      guests.filter(g => g.side === currentSide).forEach(g => {
+        const item = document.createElement("div");
+        item.className = "guest-item";
 
-          const item =
-            document.createElement("div");
+        if (g.id === selectedGuestId) {
+          item.classList.add("selected");
+        }
 
-          item.className = "guest-item";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = g.name;
 
-          if (g.id === selectedGuestId) {
-            item.classList.add("selected");
-          }
+        const statusSpan = document.createElement("span");
 
-          const nameSpan =
-            document.createElement("span");
+        if (isChecked(g.id)) {
+          statusSpan.className = "checked";
+          statusSpan.textContent = "受付済み";
+        }
 
-          nameSpan.textContent = g.name;
+        item.appendChild(nameSpan);
+        item.appendChild(statusSpan);
 
-          const statusSpan =
-            document.createElement("span");
-
-          if (isChecked(g.id)) {
-            statusSpan.className = "checked";
-            statusSpan.textContent = "受付済み";
-          }
-
-          item.appendChild(nameSpan);
-          item.appendChild(statusSpan);
-
-          item.addEventListener("click", () => {
-
-            selectedGuestId = g.id;
-            renderGuestList();
-
-          });
-
-          listEl.appendChild(item);
+        item.addEventListener("click", () => {
+          selectedGuestId = g.id;
+          renderGuestList();
         });
+
+        listEl.appendChild(item);
+      });
     }
 
     // 決定ボタン → メッセージ画面へ
-    document
-      .getElementById("btn-select-confirm")
-      .addEventListener("click", () => {
+    document.getElementById("btn-select-confirm").addEventListener("click", () => {
+      if (!selectedGuestId) {
+        alert("名前を選択してください。");
+        return;
+      }
 
-        if (!selectedGuestId) {
+      const guest = guests.find(g => g.id === selectedGuestId);
+      if (!guest) return;
 
-          alert("名前を選択してください。");
-          return;
-        }
+      setChecked(guest.id, true);
 
-        const guest =
-          guests.find(g => g.id === selectedGuestId);
+      document.getElementById("message-title").textContent =
+        guest.name + " さんへのメッセージ";
 
-        if (!guest) return;
+      document.getElementById("message-photo").src = guest.photo;
+      document.getElementById("message-text").textContent = guest.message;
 
-        setChecked(guest.id, true);
+      showScreen("screen-message");
 
-        document
-          .getElementById("message-title")
-          .textContent =
-          guest.name + " さんへのメッセージ";
+      // 20秒後にスタート画面へ戻る
+      let remaining = 20;
+      const countdownEl = document.getElementById("countdown");
 
-        document
-          .getElementById("message-photo")
-          .src = guest.photo;
+      countdownEl.textContent = `${remaining}秒後にスタート画面へ戻ります`;
 
-        document
-          .getElementById("message-text")
-          .textContent = guest.message;
+      if (timerId) {
+        clearInterval(timerId);
+      }
 
-        showScreen("screen-message");
+      timerId = setInterval(() => {
+        remaining--;
+        countdownEl.textContent = `${remaining}秒後にスタート画面へ戻ります`;
 
-        // カウントダウン処理
-        let remaining = 20;
-
-        const countdownEl =
-          document.getElementById("countdown");
-
-        countdownEl.textContent =
-          `${remaining}秒後にスタート画面へ戻ります`;
-
-        if (timerId) {
+        if (remaining <= 0) {
           clearInterval(timerId);
+          selectedGuestId = null;
+          showScreen("screen-start");
         }
-
-        timerId = setInterval(() => {
-
-          remaining--;
-
-          countdownEl.textContent =
-            `${remaining}秒後にスタート画面へ戻ります`;
-
-          if (remaining <= 0) {
-
-            clearInterval(timerId);
-
-            selectedGuestId = null;
-
-            showScreen("screen-start");
-          }
-
-        }, 1000);
-      });
+      }, 1000);
+    });
 
     // 戻るボタン
-    document
-      .getElementById("btn-message-back")
-      .addEventListener("click", () => {
+    document.getElementById("btn-message-back").addEventListener("click", () => {
+      if (timerId) {
+        clearInterval(timerId);
+      }
 
-        if (timerId) {
-          clearInterval(timerId);
-        }
-
-        selectedGuestId = null;
-
-        showScreen("screen-start");
-      });
+      selectedGuestId = null;
+      showScreen("screen-start");
+    });
 
     // 管理者モーダル
-    const modalAdmin =
-      document.getElementById("modal-admin");
+    const modalAdmin = document.getElementById("modal-admin");
+    const adminPassInput = document.getElementById("admin-pass-input");
+    const adminPassError = document.getElementById("admin-pass-error");
 
-    const adminPassInput =
-      document.getElementById("admin-pass-input");
+    document.getElementById("btn-admin-open").addEventListener("click", () => {
+      adminPassInput.value = "";
+      adminPassError.textContent = "";
+      modalAdmin.classList.add("active");
+      adminPassInput.focus();
+    });
 
-    const adminPassError =
-      document.getElementById("admin-pass-error");
+    document.getElementById("btn-admin-pass-cancel").addEventListener("click", () => {
+      modalAdmin.classList.remove("active");
+    });
 
-    document
-      .getElementById("btn-admin-open")
-      .addEventListener("click", () => {
+    document.getElementById("btn-admin-pass-ok").addEventListener("click", () => {
+      const val = adminPassInput.value.trim();
 
-        adminPassInput.value = "";
-        adminPassError.textContent = "";
-
-        modalAdmin.classList.add("active");
-
-        adminPassInput.focus();
-      });
-
-    document
-      .getElementById("btn-admin-pass-cancel")
-      .addEventListener("click", () => {
-
+      if (val === ADMIN_PASS) {
         modalAdmin.classList.remove("active");
-      });
-
-    document
-      .getElementById("btn-admin-pass-ok")
-      .addEventListener("click", () => {
-
-        const val =
-          adminPassInput.value.trim();
-
-        if (val === ADMIN_PASS) {
-
-          modalAdmin.classList.remove("active");
-
-          renderAdminTable("all");
-
-          showScreen("screen-admin");
-
-        } else {
-
-          adminPassError.textContent =
-            "パスコードが違います。";
-        }
-      });
+        renderAdminTable("all");
+        showScreen("screen-admin");
+      } else {
+        adminPassError.textContent = "パスコードが違います。";
+      }
+    });
 
     // 管理者画面
     function renderAdminTable(filter) {
-
-      const table =
-        document.getElementById("admin-table");
-
+      const table = document.getElementById("admin-table");
       table.innerHTML = "";
 
-      guests
-        .filter(g =>
-          filter === "all"
-            ? true
-            : g.side === filter
-        )
-        .forEach(g => {
+      guests.filter(g => filter === "all" ? true : g.side === filter).forEach(g => {
+        const row = document.createElement("div");
+        row.className = "admin-row";
 
-          const row =
-            document.createElement("div");
+        const sideSpan = document.createElement("span");
+        sideSpan.className = "side";
+        sideSpan.textContent = g.side === "groom" ? "Groom" : "Bride";
 
-          row.className = "admin-row";
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "name";
+        nameSpan.textContent = g.name;
 
-          const sideSpan =
-            document.createElement("span");
+        const statusSpan = document.createElement("span");
+        statusSpan.className = "status";
 
-          sideSpan.className = "side";
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = isChecked(g.id);
 
-          sideSpan.textContent =
-            g.side === "groom"
-              ? "Groom"
-              : "Bride";
-
-          const nameSpan =
-            document.createElement("span");
-
-          nameSpan.className = "name";
-          nameSpan.textContent = g.name;
-
-          const statusSpan =
-            document.createElement("span");
-
-          statusSpan.className = "status";
-
-          const checkbox =
-            document.createElement("input");
-
-          checkbox.type = "checkbox";
-          checkbox.checked = isChecked(g.id);
-
-          checkbox.addEventListener(
-            "change",
-            () => {
-              setChecked(
-                g.id,
-                checkbox.checked
-              );
-            }
-          );
-
-          statusSpan.appendChild(checkbox);
-
-          row.appendChild(sideSpan);
-          row.appendChild(nameSpan);
-          row.appendChild(statusSpan);
-
-          table.appendChild(row);
+        checkbox.addEventListener("change", () => {
+          setChecked(g.id, checkbox.checked);
         });
+
+        statusSpan.appendChild(checkbox);
+        row.appendChild(sideSpan);
+        row.appendChild(nameSpan);
+        row.appendChild(statusSpan);
+        table.appendChild(row);
+      });
     }
 
-    document
-      .querySelectorAll(
-        "#screen-admin .row button"
-      )
-      .forEach(btn => {
-
-        btn.addEventListener("click", () => {
-
-          const filter =
-            btn.getAttribute("data-filter");
-
-          renderAdminTable(filter);
-        });
+    document.querySelectorAll("#screen-admin .row button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const filter = btn.getAttribute("data-filter");
+        renderAdminTable(filter);
       });
+    });
 
-    document
-      .getElementById("btn-admin-back")
-      .addEventListener("click", () => {
-
-        showScreen("screen-start");
-      });
+    document.getElementById("btn-admin-back").addEventListener("click", () => {
+      showScreen("screen-start");
+    });
 
     // 初期化
     loadChecked();
